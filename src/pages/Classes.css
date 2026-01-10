@@ -1,0 +1,196 @@
+.classes-page {
+    min-height: 100vh;
+}
+
+.page-header {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-4xl);
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.page-subtitle {
+    font-size: var(--font-size-xl);
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-bottom: var(--space-xl);
+}
+
+.page-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+}
+
+.classes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-xl);
+}
+
+.class-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-2xl);
+    transition: all var(--transition-normal);
+    border: 2px solid transparent;
+}
+
+.class-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-primary-light);
+}
+
+.class-icon {
+    font-size: 3.5rem;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-sm);
+}
+
+.class-icon-primary {
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    box-shadow: 0 4px 12px rgba(44, 95, 78, 0.2);
+}
+
+.class-icon-secondary {
+    background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-dark));
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.2);
+}
+
+.class-icon-accent {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+    box-shadow: 0 4px 12px rgba(224, 122, 95, 0.2);
+}
+
+.class-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.class-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-bottom: var(--space-lg);
+}
+
+.class-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    flex: 1;
+    padding: var(--space-lg);
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-md);
+}
+
+.class-detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.detail-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.class-btn {
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Info Section */
+.info-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.info-card {
+    padding: var(--space-2xl);
+    text-align: center;
+}
+
+.info-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-lg);
+}
+
+.info-card h3 {
+    font-size: var(--font-size-xl);
+    color: var(--color-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.info-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-bottom: var(--space-md);
+}
+
+.info-card p {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-sm);
+}
+
+.info-contact {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+}
+
+.info-contact p {
+    margin-bottom: var(--space-xs);
+}
+
+.info-highlight {
+    background-color: var(--color-secondary-light);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-md);
+    color: var(--color-text-primary) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .classes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-content {
+        grid-template-columns: 1fr;
+    }
+}

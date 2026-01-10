@@ -1,0 +1,19 @@
+{
+  "name": "hcfbtr-brochure-resource",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "vite": "^7.2.4"
+  },
+  "dependencies": {
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.12.0"
+  }
+}

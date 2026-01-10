@@ -1,0 +1,288 @@
+.volunteer-page {
+    min-height: 100vh;
+}
+
+.volunteer-header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    padding: var(--space-4xl) 0;
+    color: white;
+}
+
+.volunteer-header-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.volunteer-intro {
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 700px;
+    margin: var(--space-xl) auto 0;
+}
+
+/* Opportunities */
+.opportunities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-2xl);
+}
+
+.opportunity-card {
+    padding: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.opportunity-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-sm);
+}
+
+.opportunity-title {
+    font-size: var(--font-size-xl);
+    color: var(--color-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.opportunity-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-bottom: var(--space-md);
+}
+
+.opportunity-description {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    flex: 1;
+}
+
+.opportunity-commitment {
+    padding: var(--space-md);
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.opportunity-requirements {
+    padding: var(--space-md);
+    background-color: var(--color-secondary-light);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+}
+
+.opportunity-requirements strong {
+    display: block;
+    margin-bottom: var(--space-Sm);
+    color: var(--color-text-primary);
+}
+
+.opportunity-requirements ul {
+    list-style: none;
+    margin: var(--space-sm) 0 0 0;
+    padding: 0;
+}
+
+.opportunity-requirements li {
+    padding: var(--space-xs) 0;
+    color: var(--color-text-secondary);
+}
+
+.opportunity-requirements li::before {
+    content: '• ';
+    color: var(--color-primary);
+    font-weight: bold;
+    margin-right: var(--space-xs);
+}
+
+/* Benefits */
+.benefits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-lg);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.benefit-item {
+    background-color: var(--color-bg-card);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.benefit-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateX(8px);
+}
+
+.benefit-text {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+/* Form */
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.form-header {
+    margin-bottom: var(--space-3xl);
+}
+
+.form-title {
+    font-size: var(--font-size-3xl);
+    color: var(--color-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.form-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-bottom: var(--space-md);
+}
+
+.form-description {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+.volunteer-form {
+    background-color: var(--color-bg-card);
+    padding: var(--space-3xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xl);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+}
+
+.form-group label {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: var(--space-md);
+    font-size: var(--font-size-base);
+    font-family: var(--font-primary);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-white);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(44, 95, 78, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-submit {
+    width: 100%;
+    margin-top: var(--space-lg);
+}
+
+/* Testimonial */
+.volunteer-testimonial {
+    max-width: 800px;
+    margin: 0 auto;
+    color: white;
+    position: relative;
+}
+
+.testimonial-quote-large {
+    font-size: 8rem;
+    font-family: Georgia, serif;
+    opacity: 0.2;
+    position: absolute;
+    top: -40px;
+    left: -20px;
+    line-height: 1;
+}
+
+.testimonial-text {
+    font-size: var(--font-size-2xl);
+    font-style: italic;
+    line-height: 1.8;
+    margin-bottom: var(--space-2xl);
+    position: relative;
+    z-index: 2;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.testimonial-author-large {
+    padding-top: var(--space-xl);
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.author-name-large {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-xs);
+}
+
+.author-role-large {
+    font-size: var(--font-size-base);
+    font-style: italic;
+    opacity: 0.85;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .opportunities-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benefits-list {
+        grid-template-columns: 1fr;
+    }
+
+    .volunteer-form {
+        padding: var(--space-xl);
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .testimonial-text {
+        font-size: var(--font-size-lg);
+    }
+
+    .testimonial-quote-large {
+        font-size: 5rem;
+        top: -30px;
+        left: -10px;
+    }
+}
