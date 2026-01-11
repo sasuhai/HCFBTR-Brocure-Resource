@@ -9,12 +9,29 @@ const getPostImage = (post) => {
 
     // Otherwise rotate through our generated assets
     const images = [
+        '/images/blog-student-reading.png',
+        '/images/blog-community-volunteers.png',
+        '/images/blog-teacher-mentoring.png',
+        '/images/blog-youth-group.png',
+        '/images/blog-quran-rehal.png',
+        '/images/blog-mosque-arch.png',
+        '/images/blog-kampung-surau.png',
+        '/images/community_gathering.png',
+        '/images/students_classroom_learning.png',
         '/images/about-students.png',
         '/images/blog-featured.png',
-        '/images/class-yoga.png'
+        '/images/hero-volunteer.png'
     ];
-    // Simple pseudo-random selection based on title length
-    const index = (post.title?.length || 0) % images.length;
+
+    // Create a hash from the title to ensure consistent but distributed image selection
+    let hash = 0;
+    const str = post.title || '';
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0; // Convert to 32bit integer
+    }
+
+    const index = Math.abs(hash) % images.length;
     return images[index];
 };
 
