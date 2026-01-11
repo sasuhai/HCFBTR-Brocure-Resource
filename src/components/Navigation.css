@@ -1,93 +1,172 @@
+/* Navigation Container - The invisible positioning wrapper */
 .navigation {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    background-color: var(--color-bg-white);
-    transition: all var(--transition-normal);
-    border-bottom: 1px solid transparent;
+    padding-top: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    /* Allow clicking through the empty space */
 }
 
-.navigation.scrolled {
-    background-color: rgba(254, 254, 254, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-md);
-    border-bottom-color: var(--color-border);
+/* The actual "Pill" Header */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    pointer-events: auto;
+    /* Re-enable clicks on the header */
 }
 
 .nav-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-lg) 0;
-    transition: padding var(--transition-normal);
+    padding: 0.75rem 1.75rem;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
 }
 
+/* Scrolled State - Slightly smaller or more opaque */
 .navigation.scrolled .nav-content {
-    padding: var(--space-md) 0;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow:
+        0 10px 25px -5px rgba(0, 0, 0, 0.08),
+        0 8px 10px -6px rgba(0, 0, 0, 0.01);
 }
 
+/* Logo */
+/* Logo */
 .nav-logo {
-    font-family: var(--font-heading);
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-primary);
+    font-family: var(--apple-font-heading);
     text-decoration: none;
-    transition: color var(--transition-fast);
+    display: flex;
+    align-items: center;
 }
 
-.nav-logo:hover {
-    color: var(--color-primary-light);
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.logo-text {
-    letter-spacing: 0.5px;
+.logo-short {
+    font-size: 1.25rem;
+    /* 20px */
+    font-weight: 700;
+    color: var(--apple-text-black);
+    letter-spacing: -0.02em;
 }
 
+.logo-separator {
+    color: #d2d2d7;
+    /* Apple separator gray */
+    font-weight: 300;
+    font-size: 1.25rem;
+}
+
+.logo-full {
+    font-size: 0.7rem;
+    /* Reduced by ~30% from 0.9rem */
+    font-weight: 600;
+    color: var(--apple-text-gray);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    white-space: normal;
+}
+
+/* Hide full name on smaller screens */
+@media (max-width: 900px) {
+
+    .logo-full,
+    .logo-separator {
+        display: none;
+    }
+}
+
+/* Navigation Links */
 .nav-links {
     display: flex;
     align-items: center;
-    gap: var(--space-xl);
+    gap: 2rem;
 }
 
 .nav-link {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
+    font-size: 0.95rem;
+    font-weight: 500;
     color: var(--color-text-secondary);
     text-decoration: none;
-    position: relative;
-    transition: color var(--transition-fast);
-    padding: var(--space-xs) 0;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    /* Pill shape */
 }
 
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: var(--color-primary);
-    transform: scaleX(0);
-    transition: transform var(--transition-normal);
+.nav-link:hover {
+    color: var(--color-primary);
+    background-color: rgba(var(--color-primary-rgb), 0.08);
+    /* Subtle colored background */
 }
 
-.nav-link:hover,
 .nav-link.active {
     color: var(--color-primary);
+    background-color: rgba(var(--color-primary-rgb), 0.12);
+    /* Slightly stronger for active */
+    font-weight: 600;
 }
 
-.nav-link.active::after {
-    transform: scaleX(1);
-}
-
+/* Buttons Group */
 .nav-cta-group {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
-    margin-left: var(--space-lg);
+    gap: 0.75rem;
 }
+
+.btn-sm {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.9rem;
+    border-radius: 9999px;
+    /* Pill buttons to match header */
+}
+
+/* Specific styling for the header buttons to match the aesthetic */
+.nav-cta-group .btn-outline {
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.nav-cta-group .btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: transparent;
+}
+
+.nav-cta-group .btn-primary {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 6px -1px rgba(var(--color-primary-rgb), 0.3);
+}
+
+.nav-cta-group .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(var(--color-primary-rgb), 0.4);
+}
+
 
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
@@ -95,8 +174,8 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: var(--space-sm);
-    z-index: 1001;
+    padding: 0.5rem;
+    color: var(--color-text-primary);
 }
 
 .hamburger {
@@ -109,9 +188,9 @@
 .hamburger span {
     display: block;
     height: 2px;
-    background-color: var(--color-text-primary);
+    background-color: currentColor;
     border-radius: 2px;
-    transition: all var(--transition-normal);
+    transition: all 0.3s ease;
 }
 
 .hamburger.open span:nth-child(1) {
@@ -127,49 +206,87 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .navigation {
+        padding-top: 1rem;
+    }
+
+    .nav-content {
+        padding: 0.75rem 1.25rem;
+    }
+
     .mobile-menu-toggle {
         display: block;
     }
 
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 80%;
-        max-width: 300px;
-        background-color: var(--color-bg-white);
-        flex-direction: column;
-        align-items: stretch;
-        padding: var(--space-4xl) var(--space-xl);
-        gap: var(--space-md);
-        box-shadow: var(--shadow-xl);
-        transform: translateX(100%);
-        transition: transform var(--transition-normal);
+    /* Hide desktop links */
+    .nav-links>.nav-link {
+        display: none;
     }
 
-    .nav-links.mobile-open {
-        transform: translateX(0);
-    }
-
-    .nav-link {
-        padding: var(--space-md);
-        border-radius: var(--radius-md);
-    }
-
-    .nav-link:hover {
-        background-color: var(--color-bg-light);
-    }
-
+    /* Keep Donate button on mobile header? No, usually hamburger hides all */
     .nav-cta-group {
-        flex-direction: column;
-        margin-left: 0;
-        margin-top: var(--space-md);
-        gap: var(--space-sm);
+        display: none;
     }
 
-    .nav-cta-group .btn {
+    /* Mobile Menu Drawer */
+    .nav-links.mobile-open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0.5rem;
+        right: 0.5rem;
+        left: 0.5rem;
+        width: auto;
+        height: auto;
+        background: white;
+        border-radius: 1.5rem;
+        padding: 2rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        z-index: -1;
+        /* Behind the header bar itself? No, usually separate */
+        /* Redefining for drawer style */
+        position: absolute;
+        top: 120%;
+        /* Below the pill */
+        left: 0;
+        right: 0;
+        align-items: center;
+        gap: 1.5rem;
+        pointer-events: auto;
+        animation: slideDown 0.3s ease-out forwards;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .nav-links.mobile-open .nav-link {
+        display: block;
+        font-size: 1.1rem;
         width: 100%;
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    .nav-links.mobile-open .nav-cta-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .nav-links.mobile-open .btn {
+        width: 100%;
+        justify-content: center;
     }
 }

@@ -1,0 +1,38 @@
+# 🎉 **Admin System Enhancement - Page Content Management**
+
+## 📋 **New Feature: Edit Home & Journey Pages**
+
+I'm adding the ability to edit content for the Home and Journey pages through the admin dashboard!
+
+### **What's Being Added:**
+
+1. **New "📄 Pages" tab** in admin dashboard
+2. **Edit Home Page:**
+   - Hero section (title, subtitle, description)
+   - Impact stats (4 statistics)
+   - About section
+   - Features (4 feature cards)
+   - CTA section
+
+3. **Edit Journey Page:**
+   - Header (title, intro)
+   - Timeline events (6 milestones)
+   - Testimonials (3 testimonials)
+   - Achievements (4 milestone cards)
+   - Vision 2030 section
+
+### **Implementation Plan:**
+
+1. Create Firestore `pages` collection with documents:
+   - `home` - All home page content
+   - `journey` - All journey page content
+
+2. Update Home.jsx and Journey.jsx to fetch from Firestore
+
+3. Add Pages management tab to Admin Dashboard
+
+4. Update Firestore rules for `pages` collection
+
+---
+
+**Starting implementation now...**

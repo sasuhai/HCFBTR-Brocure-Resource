@@ -1,0 +1,45 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ⚠️ TEMPORARY: Public write access for migration
+    // TODO: After migration, change 'allow write: if true;' back to 'allow write: if request.auth != null;'
+    
+    // Blog Posts Collection - Public read and TEMPORARY public write
+    match /blog-posts/{postId} {
+      allow read: if true;
+      allow write: if true; // ⚠️ TEMPORARY for migration - change back after!
+    }
+    
+    // Classes Collection - Public read and TEMPORARY public write
+    match /classes/{classId} {
+      allow read: if true;
+      allow write: if true; // ⚠️ TEMPORARY for migration - change back after!
+    }
+    
+    // Volunteers Collection - Public read, authenticated write
+    match /volunteers/{volunteerId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Events Collection - Public read, authenticated write
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Contact Messages - Authenticated write only
+    match /contact-messages/{messageId} {
+      allow read: if request.auth != null;
+      allow create: if true; // Anyone can submit contact form
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Default: Deny all access to other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

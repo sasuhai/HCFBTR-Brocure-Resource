@@ -1,80 +1,56 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getAllDocuments } from '../firebase/firestoreService';
 import './Blog.css';
 
-// Sample blog posts - in production, this would come from a CMS or API
-const blogPosts = [
-    {
-        id: 1,
-        slug: 'kisah-aminah-hafal-quran',
-        title: 'Kisah Aminah: Dari Tidak Tahu Membaca kepada Hafal 5 Juzuk',
-        excerpt: 'Perjalanan inspiratif seorang pelajar yang gigih mengejar cita-cita untuk menghafal Al-Quran...',
-        date: '2024-12-15',
-        author: 'Admin HCFBTR',
-        tags: ['kisah pelajar', 'tahfiz', 'inspirasi'],
-        image: '📚',
-        featured: true
-    },
-    {
-        id: 2,
-        slug: 'program-sukarelawan-2024',
-        title: 'Program Sukarelawan 2024: Pengalaman Yang Mengubah Hidup',
-        excerpt: 'Refleksi dari sukarelawan kami tentang pengalaman memberi dan menerima sepanjang tahun...',
-        date: '2024-12-01',
-        author: 'Ustaz Ahmad',
-        tags: ['sukarelawan', 'aktiviti', 'refleksi'],
-        image: '🤝'
-    },
-    {
-        id: 3,
-        slug: 'tips-belajar-bahasa-arab',
-        title: '5 Tips Mudah Belajar Bahasa Arab untuk Pemula',
-        excerpt: 'Panduan praktikal untuk mereka yang ingin mulakan pembelajaran Bahasa Arab dengan berkesan...',
-        date: '2024-11-20',
-        author: 'Ustazah Fatimah',
-        tags: ['pendidikan', 'bahasa arab', 'tips'],
-        image: '🔤'
-    },
-    {
-        id: 4,
-        slug: 'majlis-tahunan-2024',
-        title: 'Majlis Tahunan HCFBTR 2024: Meraikan 10 Tahun Bersama',
-        excerpt: 'Kenangan indah dari majlis tahunan kami yang meraikan sedekad perkhidmatan...',
-        date: '2024-11-05',
-        author: 'Admin HCFBTR',
-        tags: ['aktiviti', 'pencapaian', 'perayaan'],
-        image: '🎉'
-    },
-    {
-        id: 5,
-        slug: 'pentingnya-adab-dalam-menuntut-ilmu',
-        title: 'Pentingnya Adab Dalam Menuntut Ilmu',
-        excerpt: 'Mengapa adab dan akhlak adalah asas penting dalam pembelajaran agama...',
-        date: '2024-10-15',
-        author: 'Ustaz Yusof',
-        tags: ['pendidikan', 'adab', 'akhlak'],
-        image: '🌟'
-    },
-    {
-        id: 6,
-        slug: 'pencapaian-pelajar-2024',
-        title: 'Pencapaian Cemerlang Pelajar Tahun 2024',
-        excerpt: 'Tahniah kepada pelajar-pelajar kami yang mencatatkan pencapaian gemilang dalam pelbagai bidang...',
-        date: '2024-10-01',
-        author: 'Admin HCFBTR',
-        tags: ['pencapaian', 'kisah pelajar'],
-        image: '🏆'
-    }
-];
+const getPostImage = (post) => {
+    // If it looks like a URL, use it
+    if (post.image && (post.image.startsWith('http') || post.image.startsWith('/'))) return post.image;
+
+    // Otherwise rotate through our generated assets
+    const images = [
+        '/images/about-students.png',
+        '/images/blog-featured.png',
+        '/images/class-yoga.png'
+    ];
+    // Simple pseudo-random selection based on title length
+    const index = (post.title?.length || 0) % images.length;
+    return images[index];
+};
 
 const allTags = ['semua', 'kisah pelajar', 'aktiviti', 'sukarelawan', 'pencapaian', 'pendidikan', 'inspirasi', 'tips'];
 
 function Blog() {
     const [selectedTag, setSelectedTag] = useState('semua');
+    const [blogPosts, setBlogPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Fetch blog posts from Firestore
+    useEffect(() => {
+        loadBlogPosts();
+    }, []);
+
+    const loadBlogPosts = async () => {
+        try {
+            setLoading(true);
+            const posts = await getAllDocuments('blog-posts');
+
+            // Sort posts by date (newest first)
+            const sortedPosts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            setBlogPosts(sortedPosts);
+            setError(null);
+        } catch (err) {
+            console.error('Error loading blog posts:', err);
+            setError('Gagal memuatkan artikel. Sila cuba sebentar lagi.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const filteredPosts = selectedTag === 'semua'
         ? blogPosts
-        : blogPosts.filter(post => post.tags.includes(selectedTag));
+        : blogPosts.filter(post => post.tags && post.tags.includes(selectedTag));
 
     const featuredPost = blogPosts.find(post => post.featured);
 
@@ -102,7 +78,7 @@ function Blog() {
                             <div className="featured-badge">Featured</div>
                             <div className="featured-content">
                                 <div className="featured-image">
-                                    <span className="featured-emoji">{featuredPost.image}</span>
+                                    <img src="/images/blog-featured.png" alt={featuredPost.title} />
                                 </div>
                                 <div className="featured-text">
                                     <div className="post-meta">
@@ -143,32 +119,69 @@ function Blog() {
             {/* Blog Posts Grid */}
             <section className="posts-section section">
                 <div className="container">
-                    <div className="posts-grid">
-                        {filteredPosts.map((post) => (
-                            <Link key={post.id} to={`/blog/${post.slug}`} className="post-card card">
-                                <div className="post-image">
-                                    <span className="post-emoji">{post.image}</span>
-                                </div>
-                                <div className="post-content">
-                                    <div className="post-meta">
-                                        <span className="post-date">{new Date(post.date).toLocaleDateString('ms-MY', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
-                                    </div>
-                                    <h3 className="post-title">{post.title}</h3>
-                                    <p className="post-excerpt">{post.excerpt}</p>
-                                    <div className="post-tags">
-                                        {post.tags.slice(0, 2).map((tag, index) => (
-                                            <span key={index} className="badge">{tag}</span>
-                                        ))}
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-
-                    {filteredPosts.length === 0 && (
-                        <div className="no-posts text-center">
-                            <p>Tiada artikel untuk tag ini buat masa sekarang.</p>
+                    {/* Loading State */}
+                    {loading && (
+                        <div className="text-center" style={{ padding: '3rem' }}>
+                            <p style={{ fontSize: '1.25rem', color: 'var(--color-text-secondary)' }}>
+                                📚 Memuatkan artikel... | Loading posts...
+                            </p>
                         </div>
+                    )}
+
+                    {/* Error State */}
+                    {error && !loading && (
+                        <div className="text-center" style={{ padding: '3rem' }}>
+                            <p style={{ color: 'var(--color-error)', marginBottom: '1rem' }}>
+                                {error}
+                            </p>
+                            <button onClick={loadBlogPosts} className="btn btn-primary">
+                                Cuba Lagi | Try Again
+                            </button>
+                        </div>
+                    )}
+
+                    {/* No Posts */}
+                    {!loading && !error && blogPosts.length === 0 && (
+                        <div className="text-center" style={{ padding: '3rem' }}>
+                            <p style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>
+                                📝 Belum ada artikel yang diterbitkan.
+                            </p>
+                            <p style={{ color: 'var(--color-text-secondary)' }}>
+                                No blog posts have been published yet.
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Posts Grid */}
+                    {!loading && !error && blogPosts.length > 0 && (
+                        <>
+                            <div className="posts-grid">
+                                {filteredPosts.map((post) => (
+                                    <Link key={post.id} to={`/blog/${post.slug}`} className="post-card card">
+                                        <div className="post-image" style={{ backgroundImage: `url(${getPostImage(post)})` }}>
+                                        </div>
+                                        <div className="post-content">
+                                            <div className="post-meta">
+                                                <span className="post-date">{new Date(post.date).toLocaleDateString('ms-MY', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                                            </div>
+                                            <h3 className="post-title">{post.title}</h3>
+                                            <p className="post-excerpt">{post.excerpt}</p>
+                                            <div className="post-tags">
+                                                {post.tags && post.tags.slice(0, 2).map((tag, index) => (
+                                                    <span key={index} className="badge">{tag}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+
+                            {filteredPosts.length === 0 && (
+                                <div className="no-posts text-center">
+                                    <p>Tiada artikel untuk tag ini buat masa sekarang.</p>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             </section>

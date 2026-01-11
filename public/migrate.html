@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCFBTR - Data Migration Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            background: #f7fafc;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .info-box p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .log {
+            background: #1a202c;
+            color: #48bb78;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .log.active {
+            display: block;
+        }
+
+        .log-line {
+            margin-bottom: 5px;
+        }
+
+        .success {
+            color: #48bb78;
+        }
+
+        .error {
+            color: #f56565;
+        }
+
+        .info {
+            color: #4299e1;
+        }
+
+        .warning {
+            color: #ed8936;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        .spinner.active {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔥 Data Migration Tool</h1>
+        <p class="subtitle">Transfer hardcoded data to Firestore</p>
+
+        <div class="info-box">
+            <h3>📋 What will be migrated?</h3>
+            <p>This tool will transfer all original blog posts and classes from your code to the Firestore database.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Blog Posts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Classes</div>
+            </div>
+        </div>
+
+        <button id="migrateBtn" class="btn btn-primary" onclick="runMigration()">
+            🚀 Start Migration
+        </button>
+
+        <button id="resetBtn" class="btn btn-secondary" onclick="location.reload()" style="display: none;">
+            🔄 Reset
+        </button>
+
+        <div class="spinner" id="spinner"></div>
+
+        <div class="log" id="log"></div>
+    </div>
+
+    <script type="module">
+        import { migrateAllData } from './utils/migrateData.js';
+
+        window.runMigration = async function () {
+            const btn = document.getElementById('migrateBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const spinner = document.getElementById('spinner');
+            const log = document.getElementById('log');
+
+            // Disable button
+            btn.disabled = true;
+            btn.textContent = '⏳ Migrating...';
+
+            // Show spinner and log
+            spinner.classList.add('active');
+            log.classList.add('active');
+            log.innerHTML = '';
+
+            // Override console.log to show in our log
+            const originalLog = console.log;
+            const originalError = console.error;
+
+            console.log = function (...args) {
+                originalLog.apply(console, args);
+                const message = args.join(' ');
+                let className = 'info';
+                if (message.includes('✅')) className = 'success';
+                else if (message.includes('❌')) className = 'error';
+                else if (message.includes('⚠️')) className = 'warning';
+
+                log.innerHTML += `<div class="log-line ${className}">${message}</div>`;
+                log.scrollTop = log.scrollHeight;
+            };
+
+            console.error = function (...args) {
+                originalError.apply(console, args);
+                log.innerHTML += `<div class="log-line error">❌ ${args.join(' ')}</div>`;
+                log.scrollTop = log.scrollHeight;
+            };
+
+            try {
+                // Run migration
+                await migrateAllData();
+
+                // Success
+                spinner.classList.remove('active');
+                btn.textContent = '✅ Migration Complete!';
+                btn.style.background = '#48bb78';
+                resetBtn.style.display = 'block';
+
+                setTimeout(() => {
+                    if (confirm('Migration complete! Would you like to view the Blog page to see your data?')) {
+                        window.location.href = '/#/blog';
+                    }
+                }, 1000);
+
+            } catch (error) {
+                // Error
+                spinner.classList.remove('active');
+                btn.textContent = '❌ Migration Failed';
+                btn.style.background = '#f56565';
+                resetBtn.style.display = 'block';
+                console.error('Migration error:', error);
+            }
+
+            // Restore console
+            console.log = originalLog;
+            console.error = originalError;
+        };
+    </script>
+</body>
+
+</html>

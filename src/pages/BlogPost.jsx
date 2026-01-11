@@ -1,83 +1,69 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { queryDocuments } from '../firebase/firestoreService';
 import './BlogPost.css';
 
-// In production, this would fetch from CMS/API
-const blogPostsData = {
-    'kisah-aminah-hafal-quran': {
-        title: 'Kisah Aminah: Dari Tidak Tahu Membaca kepada Hafal 5 Juzuk',
-        subtitle: "Aminah's Journey: From Unable to Read to Memorizing 5 Juz",
-        date: '2024-12-15',
-        author: 'Admin HCFBTR',
-        tags: ['kisah pelajar', 'tahfiz', 'inspirasi'],
-        image: '📚',
-        content: `
-<p>Aminah, seorang gadis berusia 12 tahun, datang ke HCFBTR pada tahun 2020 dengan satu impian yang besar tetapi penuh cabaran. Dia tidak tahu membaca Al-Quran dengan betul, tetapi hatinya penuh dengan keinginan untuk menghafal kalimah Allah.</p>
+const Icons = {
+    ArrowLeft: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>,
+    Loader: () => <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+};
 
-<h2>Permulaan Yang Sukar</h2>
-<p>"Pada mulanya, saya rasa macam mustahil. Kawan-kawan semua dah pandai baca, saya sorang je yang lambat," kenang Aminah. Tetapi dengan sokongan ustazah dan kesabaran yang luar biasa, dia tidak pernah putus asa.</p>
-
-<h2>Usaha Yang Berterusan</h2>
-<p>Setiap hari, Aminah datang ke kelas dengan semangat yang tinggi. Dia menggunakan setiap masa lapang untuk mengulang bacaan. Ustazah Fatimah, guru tahfiznya, berkongsi: "Aminah adalah contoh terbaik kesungguhan. Walaupun bermula dari sifar, dia tidak pernah lewat atau ponteng kelas."</p>
-
-<p>Dalam masa 6 bulan pertama, Aminah berjaya membaca Al-Quran dengan lancar. Ini adalah pencapaian besar yang membuatkan semua orang bangga. Tetapi dia tidak berhenti di situ.</p>
-
-<h2>Impian Tercapai</h2>
-<p>Selepas 3 tahun berusaha, pada tahun 2023, Aminah berjaya menghafal 5 juzuk Al-Quran. Pencapaian ini disambut dengan penuh kegembiraan oleh seluruh komuniti HCFBTR.</p>
-
-<blockquote>
-"Allah mudahkan jalan untuk mereka yang berusaha. Saya tidak pernah sangka saya boleh sampai sini. Terima kasih kepada semua ustaz dan ustazah yang tidak pernah putus asa dengan saya." - Aminah
-</blockquote>
-
-<h2>Inspirasi Untuk Semua</h2>
-<p>Kisah Aminah mengajar kita tentang pentingnya ketekunan, kesabaran, dan kepercayaan kepada diri sendiri. Tiada matlamat yang terlalu tinggi jika kita berusaha dengan ikhlas dan tidak putus asa.</p>
-
-<p>Hari ini, Aminah bukan sahaja seorang pelajar yang cemerlang, tetapi juga membantu rakan-rakannya yang baru belajar membaca Al-Quran. Dia telah menjadi inspirasi kepada ramai pelajar lain di HCFBTR.</p>
-    `
-    },
-    'program-sukarelawan-2024': {
-        title: 'Program Sukarelawan 2024: Pengalaman Yang Mengubah Hidup',
-        subtitle: '2024 Volunteer Program: A Life-Changing Experience',
-        date: '2024-12-01',
-        author: 'Ustaz Ahmad',
-        tags: ['sukarelawan', 'aktiviti', 'refleksi'],
-        image: '🤝',
-        content: `
-<p>Tahun 2024 menandakan tahun yang paling berimpak dalam program sukarelawan HCFBTR. Dengan lebih 50 sukarelawan aktif, kami telah mencapai banyak kejayaan dan memberi impak yang besar kepada komuniti.</p>
-
-<h2>Memberi Sambil Menerima</h2>
-<p>Ramai yang menyertai program sukarelawan dengan niat untuk memberi, tetapi akhirnya mendapati mereka menerima lebih banyak daripada yang mereka beri. Ini adalah pengalaman yang dikongsi oleh hampir semua sukarelawan kami.</p>
-
-<p>"Saya datang untuk mengajar, tetapi saya belajar lebih banyak tentang kesabaran, kasih sayang, dan erti sebenar kebahagiaan," kongsi Siti, salah seorang sukarelawan kami.</p>
-
-<h2>Aktiviti Sepanjang Tahun</h2>
-<p>Sepanjang 2024, kami telah menganjurkan pelbagai aktiviti:
-- Program mengajar mingguan untuk 6 kelas berbeza
-- Kem motivasi untuk pelajar sekolah menengah
-- Program bimbingan peperiksaan
-- Lawatan sambil belajar ke muzium dan perpustakaan
-- Majlis berbuka puasa bersama</p>
-
-<h2>Testimoni Sukarelawan</h2>
-
-<blockquote>
-"Mengajar di HCFBTR bukan sekadar tanggungjawab, ia satu keberkatan. Setiap senyuman pelajar adalah hadiah yang tidak ternilai." - Ahmad, Guru Sukarelawan
-</blockquote>
-
-<blockquote>
-"Saya tidak pernah menyangka bahawa menggunakan weekend untuk sukarelawan boleh memberi kepuasan hidup yang begini besar." - Nurul, Sukarelawan Baharu
-</blockquote>
-
-<h2>Jom Sertai Kami!</h2>
-<p>Kami sentiasa mencari individu yang bersemangat untuk menyertai pasukan sukarelawan kami. Tidak kira sama ada anda mempunyai 2 jam seminggu atau lebih, sumbangan anda sangat bermakna.</p>
-
-<p>Hubungi kami hari ini untuk mengetahui lebih lanjut tentang bagaimana anda boleh menjadi sebahagian daripada keluarga HCFBTR!</p>
-    `
+const PostImage = ({ image }) => {
+    if (!image) return null;
+    if (image.startsWith('/') || image.startsWith('http')) {
+        return <img src={image} alt="Post" />;
     }
+    return <span>{image}</span>;
 };
 
 function BlogPost() {
     const { slug } = useParams();
-    const post = blogPostsData[slug];
+    const [post, setPost] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Fetch blog post from Firestore
+    useEffect(() => {
+        loadBlogPost();
+    }, [slug]);
+
+    const loadBlogPost = async () => {
+        try {
+            setLoading(true);
+            // Query for post with matching slug
+            const posts = await queryDocuments('blog-posts', [
+                { field: 'slug', operator: '==', value: slug }
+            ]);
+
+            if (posts.length > 0) {
+                setPost(posts[0]);
+                setError(null);
+            } else {
+                setPost(null);
+                setError('Post not found');
+            }
+        } catch (err) {
+            console.error('Error loading blog post:', err);
+            setError('Failed to load post');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Loading state
+    if (loading) {
+        return (
+            <div className="blog-post-page">
+                <div className="container section">
+                    <div className="text-center" style={{ padding: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                        <div style={{ color: 'var(--color-text-secondary)' }}><Icons.Loader /></div>
+                        <p style={{ fontSize: '1.25rem', color: 'var(--color-text-secondary)' }}>
+                            Memuatkan artikel... | Loading post...
+                        </p>
+                    </div>
+                </div>
+            </div>);
+    }
 
     if (!post) {
         return (
@@ -102,10 +88,12 @@ function BlogPost() {
                 <header className="post-header">
                     <div className="container">
                         <Link to="/blog" className="back-link">
-                            ← Kembali ke Blog
+                            <Icons.ArrowLeft /> Kembali ke Blog
                         </Link>
                         <div className="post-header-content">
-                            <div className="post-icon">{post.image}</div>
+                            <div className="post-icon">
+                                <PostImage image={post.image} />
+                            </div>
                             <h1 className="post-header-title">{post.title}</h1>
                             <p className="post-header-subtitle">{post.subtitle}</p>
                             <div className="post-header-meta">
@@ -138,8 +126,8 @@ function BlogPost() {
                 <footer className="post-footer">
                     <div className="container">
                         <div className="post-footer-content">
-                            <Link to="/blog" className="btn btn-outline">
-                                ← Baca Artikel Lain
+                            <Link to="/blog" className="btn btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                                <Icons.ArrowLeft /> Baca Artikel Lain
                             </Link>
                             <div className="share-section">
                                 <span>Kongsikan | Share:</span>

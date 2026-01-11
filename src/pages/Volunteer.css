@@ -1,288 +1,349 @@
+/* Apple-Inspired Volunteer Page */
+
 .volunteer-page {
     min-height: 100vh;
+    background-color: var(--apple-gray-bg);
 }
 
 .volunteer-header {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    padding: var(--space-4xl) 0;
+    background-color: black;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/hero-volunteer.png');
+    background-size: cover;
+    background-position: center;
+    padding: 160px 0 120px;
     color: white;
+    text-align: center;
 }
 
 .volunteer-header-content {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    padding: 0 24px;
+}
+
+.volunteer-header-content h1 {
+    font-size: 80px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
 }
 
 .volunteer-intro {
-    font-size: var(--font-size-lg);
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.95);
+    font-size: 24px;
+    color: white;
     max-width: 700px;
-    margin: var(--space-xl) auto 0;
+    margin: 0 auto;
+    font-weight: 400;
 }
 
 /* Opportunities */
 .opportunities-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-2xl);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
 }
 
 .opportunity-card {
-    padding: var(--space-2xl);
+    padding: 40px;
+    background: white;
+    border-radius: var(--apple-card-radius);
+    box-shadow: var(--apple-card-shadow);
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: 16px;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.opportunity-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 .opportunity-icon {
-    font-size: 4rem;
-    margin-bottom: var(--space-sm);
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-bottom: 24px;
+    color: var(--apple-blue);
 }
 
 .opportunity-title {
-    font-size: var(--font-size-xl);
-    color: var(--color-primary);
-    margin-bottom: var(--space-xs);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--apple-text-black);
+    margin-bottom: 4px;
 }
 
 .opportunity-subtitle {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-light);
-    font-style: italic;
-    margin-bottom: var(--space-md);
+    font-size: 15px;
+    color: var(--apple-text-gray);
+    margin-bottom: 12px;
 }
 
 .opportunity-description {
-    color: var(--color-text-secondary);
-    line-height: 1.7;
+    color: var(--apple-text-gray);
+    line-height: 1.5;
+    font-size: 17px;
     flex: 1;
 }
 
 .opportunity-commitment {
-    padding: var(--space-md);
-    background-color: var(--color-bg-light);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
+    padding: 8px 16px;
+    background-color: var(--apple-gray-bg);
+    border-radius: 980px;
+    font-size: 13px;
+    color: var(--apple-text-black);
+    align-self: flex-start;
+    font-weight: 600;
 }
 
 .opportunity-requirements {
-    padding: var(--space-md);
-    background-color: var(--color-secondary-light);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-sm);
+    background: transparent;
+    padding: 0;
 }
 
 .opportunity-requirements strong {
     display: block;
-    margin-bottom: var(--space-Sm);
-    color: var(--color-text-primary);
+    margin-bottom: 8px;
+    color: var(--apple-text-black);
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .opportunity-requirements ul {
     list-style: none;
-    margin: var(--space-sm) 0 0 0;
+    margin: 0;
     padding: 0;
 }
 
 .opportunity-requirements li {
-    padding: var(--space-xs) 0;
-    color: var(--color-text-secondary);
+    padding: 4px 0;
+    color: var(--apple-text-gray);
+    font-size: 14px;
+    position: relative;
+    padding-left: 16px;
 }
 
 .opportunity-requirements li::before {
-    content: '• ';
-    color: var(--color-primary);
+    content: '•';
+    color: var(--apple-blue);
+    position: absolute;
+    left: 0;
     font-weight: bold;
-    margin-right: var(--space-xs);
 }
 
 /* Benefits */
 .benefits-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--space-lg);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
     max-width: 900px;
     margin: 0 auto;
 }
 
 .benefit-item {
-    background-color: var(--color-bg-card);
-    padding: var(--space-xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-normal);
+    background-color: white;
+    padding: 24px;
+    border-radius: var(--apple-card-radius);
+    box-shadow: var(--apple-card-shadow);
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.benefit-icon {
+    color: var(--apple-blue);
+    display: flex;
+    align-items: center;
 }
 
 .benefit-item:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateX(8px);
+    transform: scale(1.02);
 }
 
 .benefit-text {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-secondary);
-    line-height: 1.7;
+    font-size: 19px;
+    color: var(--apple-text-black);
+    line-height: 1.5;
 }
 
 /* Form */
 .form-container {
-    max-width: 700px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
 .form-header {
-    margin-bottom: var(--space-3xl);
+    margin-bottom: 40px;
+    text-align: center;
 }
 
 .form-title {
-    font-size: var(--font-size-3xl);
-    color: var(--color-primary);
-    margin-bottom: var(--space-xs);
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--apple-text-black);
+    margin-bottom: 10px;
 }
 
 .form-subtitle {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-light);
-    font-style: italic;
-    margin-bottom: var(--space-md);
+    font-size: 21px;
+    color: var(--apple-text-gray);
+    margin-bottom: 20px;
 }
 
 .form-description {
-    font-size: var(--font-size-base);
-    color: var(--color-text-secondary);
-    line-height: 1.7;
+    font-size: 17px;
+    color: var(--apple-text-secondary);
+    line-height: 1.5;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .volunteer-form {
-    background-color: var(--color-bg-card);
-    padding: var(--space-3xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    background-color: white;
+    padding: 60px;
+    border-radius: var(--apple-card-radius);
+    box-shadow: var(--apple-card-shadow);
 }
 
 .form-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--space-xl);
-    margin-bottom: var(--space-xl);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-bottom: 30px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-xl);
+    gap: 8px;
+    margin-bottom: 30px;
 }
 
 .form-group label {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--apple-text-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-left: 4px;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-    padding: var(--space-md);
-    font-size: var(--font-size-base);
-    font-family: var(--font-primary);
-    color: var(--color-text-primary);
-    background-color: var(--color-bg-white);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
+    padding: 16px;
+    font-size: 17px;
+    font-family: var(--apple-font-heading);
+    color: var(--apple-text-black);
+    background-color: var(--apple-gray-bg);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    width: 100%;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(44, 95, 78, 0.1);
+    background-color: white;
+    border-color: var(--apple-blue);
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
 }
 
 .form-group textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 120px;
 }
 
 .form-submit {
     width: 100%;
-    margin-top: var(--space-lg);
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 980px;
+    font-size: 17px;
+    font-weight: 600;
+    background: var(--apple-blue);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.form-submit:hover {
+    background: var(--apple-blue-hover);
 }
 
 /* Testimonial */
 .volunteer-testimonial {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     color: white;
     position: relative;
+    text-align: center;
 }
 
 .testimonial-quote-large {
-    font-size: 8rem;
-    font-family: Georgia, serif;
-    opacity: 0.2;
+    font-size: 80px;
+    font-family: serif;
+    opacity: 0.1;
     position: absolute;
     top: -40px;
-    left: -20px;
+    left: 50%;
+    transform: translateX(-50%);
     line-height: 1;
 }
 
 .testimonial-text {
-    font-size: var(--font-size-2xl);
-    font-style: italic;
-    line-height: 1.8;
-    margin-bottom: var(--space-2xl);
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 40px;
     position: relative;
     z-index: 2;
-    color: rgba(255, 255, 255, 0.95);
+    color: white;
 }
 
 .testimonial-author-large {
-    padding-top: var(--space-xl);
-    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-block;
 }
 
 .author-name-large {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-semibold);
-    margin-bottom: var(--space-xs);
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
 .author-role-large {
-    font-size: var(--font-size-base);
-    font-style: italic;
-    opacity: 0.85;
+    font-size: 17px;
+    color: #a1a1a6;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .opportunities-grid {
         grid-template-columns: 1fr;
-    }
-
-    .benefits-list {
-        grid-template-columns: 1fr;
-    }
-
-    .volunteer-form {
-        padding: var(--space-xl);
     }
 
     .form-row {
         grid-template-columns: 1fr;
     }
+}
 
-    .testimonial-text {
-        font-size: var(--font-size-lg);
+@media (max-width: 768px) {
+    .volunteer-header-content h1 {
+        font-size: 48px;
     }
 
-    .testimonial-quote-large {
-        font-size: 5rem;
-        top: -30px;
-        left: -10px;
+    .volunteer-form {
+        padding: 30px;
+    }
+
+    .testimonial-text {
+        font-size: 24px;
     }
 }
