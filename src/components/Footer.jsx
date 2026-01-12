@@ -87,7 +87,7 @@ function Footer() {
 
                 <div className="footer-bottom">
                     <p>Idiahus @ {currentYear} {orgData?.shortName || 'HCFBTR'}. All rights reserved.</p>
-                    <p className="footer-tagline">Built with <Icons.Heart /> for our community</p>
+                    <p className="footer-tagline">Built with <Icons.Heart /> for our Islam</p>
                 </div>
             </div>
         </footer>
