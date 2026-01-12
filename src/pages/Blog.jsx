@@ -35,11 +35,12 @@ const getPostImage = (post) => {
     return images[index];
 };
 
-const allTags = ['semua', 'kisah pelajar', 'aktiviti', 'sukarelawan', 'pencapaian', 'pendidikan', 'inspirasi', 'tips'];
-
 function Blog() {
-    const [selectedTag, setSelectedTag] = useState('semua');
     const [blogPosts, setBlogPosts] = useState([]);
+    const [selectedTag, setSelectedTag] = useState('semua');
+
+    // Derive tags from posts
+    const allTags = ['semua', ...new Set(blogPosts.flatMap(post => post.tags || []))].sort();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 

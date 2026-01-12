@@ -54,57 +54,27 @@ function Home() {
 
     const getDefaultContent = () => ({
         hero: {
-            title: "Membina Generasi Masa Depan",
-            subtitle: "Building Tomorrow's Generation",
-            description: "HCFBTR telah membimbing ratusan pelajar selama lebih sedekad, menyediakan pendidikan berkualiti dan nilai-nilai murni untuk membina pemimpin masa depan yang berintegriti."
+            title: "",
+            subtitle: "",
+            description: ""
         },
-        impactStats: [
-            { number: '10+', label: 'Tahun Perkhidmatan', sublabel: 'Years of Service' },
-            { number: '500+', label: 'Pelajar Dibimbing', sublabel: 'Students Guided' },
-            { number: '50+', label: 'Sukarelawan Aktif', sublabel: 'Active Volunteers' },
-            { number: '15+', label: 'Program & Kelas', sublabel: 'Programs & Classes' }
-        ],
+        impactStats: [],
         about: {
-            title: "Tentang HCFBTR",
-            subtitle: "About Us",
-            paragraph1: "HCFBTR adalah sebuah organisasi pendidikan yang berdedikasi untuk membina dan membimbing generasi muda. Sejak sedekad yang lalu, kami telah menyediakan pelbagai program pembelajaran yang berkualiti dan berkesan.",
-            paragraph2: "Dengan pasukan guru yang berpengalaman dan sukarelawan yang komited, kami terus berusaha untuk memberikan impak positif kepada komuniti melalui pendidikan yang holistik dan berintegriti."
+            title: "",
+            subtitle: "",
+            paragraph1: "",
+            paragraph2: ""
         },
-        features: [
-            {
-                icon: <Icons.Book />,
-                title: 'Pendidikan Berkualiti',
-                subtitle: 'Quality Education',
-                description: 'Kami menyediakan program pembelajaran yang komprehensif dan berkesan untuk semua peringkat.'
-            },
-            {
-                icon: <Icons.Users />,
-                title: 'Komuniti Penyayang',
-                subtitle: 'Caring Community',
-                description: 'Suasana pembelajaran yang mesra, menyokong, dan menggalakkan pertumbuhan bersama.'
-            },
-            {
-                icon: <Icons.Star />,
-                title: 'Bimbingan Berpengalaman',
-                subtitle: 'Experienced Mentorship',
-                description: 'Guru-guru berdedikasi yang komited untuk melihat setiap pelajar berjaya.'
-            },
-            {
-                icon: <Icons.Leaf />,
-                title: 'Pembangunan Holistik',
-                subtitle: 'Holistic Development',
-                description: 'Fokus pada pengembangan akademik, rohani, dan sahsiah para pelajar.'
-            }
-        ],
+        features: [],
         whyChooseUs: {
-            title: "Mengapa Pilih Kami",
-            subtitle: "Why Choose Us",
-            description: "Kami komited untuk menyediakan pengalaman pembelajaran terbaik"
+            title: "",
+            subtitle: "",
+            description: ""
         },
         cta: {
-            title: "Sertai Kami Dalam Membina Masa Depan",
-            subtitle: "Join Us in Building the Future",
-            description: "Setiap sumbangan dan sumbangan masa anda membawa perubahan besar dalam kehidupan para pelajar kami."
+            title: "",
+            subtitle: "",
+            description: ""
         }
     });
 

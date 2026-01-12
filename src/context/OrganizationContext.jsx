@@ -8,13 +8,13 @@ export function useOrganization() {
 }
 
 const defaultOrgData = {
-    fullName: 'Hidayah Center Foundation @ Bandar Tun Razak',
-    shortName: 'HCF.BTR',
-    address: 'Bandar Tun Razak, 56000 Kuala Lumpur',
-    email: 'info@hcfbtr.org',
-    phone: ['+60 12-345 6789'],
-    facebook: 'https://facebook.com/hcfbtr',
-    instagram: 'https://instagram.com/hcfbtr',
+    fullName: '',
+    shortName: '',
+    address: '',
+    email: '',
+    phone: [],
+    facebook: '',
+    instagram: '',
     bank: {
         bankName: '',
         accountName: '',

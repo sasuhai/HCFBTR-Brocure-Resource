@@ -24,8 +24,8 @@ function Donate() {
                         <h1 className="page-title">Donate</h1>
                         <p className="page-subtitle">Sumbangan Anda Membawa Perubahan</p>
                         <p className="donate-intro">
-                            Setiap ringgit yang anda sumbangkan membantu kami menyediakan pendidikan berkualiti
-                            kepada anak-anak yang memerlukan. Bersama-sama, kita membina masa depan yang lebih cerah.
+                            Setiap ringgit yang anda sumbangkan adalah pelaburan untuk menyampaikan Islam dan memperkasakan mualaf.
+                            Bersama-sama, kita membina masa depan yang lebih cerah.
                         </p>
                     </div>
                 </div>
@@ -83,18 +83,18 @@ function Donate() {
                                     <div className="bank-info-grid">
                                         <div className="bank-info-item">
                                             <div className="info-label">Nama Akaun | Account Name</div>
-                                            <div className="info-value">{orgData?.bank?.accountName || 'Hidayah Center Foundation'}</div>
+                                            <div className="info-value">{orgData?.bank?.accountName}</div>
                                         </div>
 
                                         <div className="bank-info-item">
                                             <div className="info-label">Nama Bank | Bank Name</div>
-                                            <div className="info-value">{orgData?.bank?.bankName || 'Maybank'}</div>
+                                            <div className="info-value">{orgData?.bank?.bankName}</div>
                                         </div>
 
                                         <div className="bank-info-item featured">
                                             <div className="info-label">Nombor Akaun | Account Number</div>
-                                            <div className="info-value account-number">{orgData?.bank?.accountNumber || '1234 5678 9012'}</div>
-                                            <button className="copy-btn" onClick={() => navigator.clipboard.writeText(orgData?.bank?.accountNumber || '123456789012')}>
+                                            <div className="info-value account-number">{orgData?.bank?.accountNumber}</div>
+                                            <button className="copy-btn" onClick={() => navigator.clipboard.writeText(orgData?.bank?.accountNumber)}>
                                                 <Icons.Copy /> Copy
                                             </button>
                                         </div>
@@ -138,7 +138,7 @@ function Donate() {
                                                 <span className="contact-icon"><Icons.Mail /></span>
                                                 <div>
                                                     <div className="contact-label">Email</div>
-                                                    <div className="contact-value">{orgData?.email || 'donations@hcfbtr.org'}</div>
+                                                    <div className="contact-value">{orgData?.email}</div>
                                                 </div>
                                             </a>
                                         </div>
@@ -191,7 +191,7 @@ function Donate() {
                         <p className="contact-subtitle">Have Questions?</p>
                         <p>Kami sedia membantu. Hubungi kami untuk maklumat lanjut mengenai cara menyumbang atau impak sumbangan anda.</p>
                         <div className="contact-info">
-                            <p>📧 {orgData?.email || 'info@hcfbtr.org'}</p>
+                            <p>📧 {orgData?.email}</p>
                             {orgData?.phone?.[0] && <p>📱 {orgData.phone[0]}</p>}
                         </div>
                     </div>

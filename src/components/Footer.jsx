@@ -25,7 +25,7 @@ function Footer() {
                             {orgData?.fullName || 'Hidayah Center Foundation @ Bandar Tun Razak'}
                         </p>
                         <p className="footer-description" style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>
-                            Membimbing & membina generasi masa depan melalui pendidikan berkualiti dan nilai-nilai murni.
+                            Sampaikan Islam, Perkayakan Mualaf
                         </p>
                     </div>
 
