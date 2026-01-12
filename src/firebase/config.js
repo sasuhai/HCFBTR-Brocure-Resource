@@ -3,13 +3,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDRwhuZiJPSbcvckkphm1CTyMrxZHIG30c",
-    authDomain: "hcfbtr-brocure-resource.firebaseapp.com",
-    projectId: "hcfbtr-brocure-resource",
-    storageBucket: "hcfbtr-brocure-resource.firebasestorage.app",
-    messagingSenderId: "541292067142",
-    appId: "1:541292067142:web:e9d9a80870f47c607bcd47",
-    measurementId: "G-FD1QVBZ3SR"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
