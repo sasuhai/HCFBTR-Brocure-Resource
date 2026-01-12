@@ -389,10 +389,89 @@ h4 {
     margin-bottom: 20px;
 }
 
-.cta-buttons .btn {
-    border-radius: 980px;
-    padding: 14px 28px;
+/* ============================================
+   Premium Apple-Style Buttons (High Specificity Override)
+   ============================================ */
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+/* Base style with .home-page prefix to beat global .btn */
+.home-page .cta-buttons .btn {
+    padding: 14px 32px;
     font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    border-radius: 980px;
+    /* Perfect pill shape */
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+    /* Force smooth easing */
+    line-height: 1.2;
+    min-width: 170px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin: 6px;
+    cursor: pointer;
+    border: none;
+    box-shadow: none;
+    /* Reset shadow first */
+}
+
+/* 1. Donate Now - Primary (Apple Blue) */
+.home-page .cta-buttons .btn-primary {
+    background-color: #0071e3 !important;
+    color: white !important;
+    border: 1px solid #0071e3;
+    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.3);
+    /* Base shadow */
+}
+
+.home-page .cta-buttons .btn-primary:hover {
+    background-color: #0077ed !important;
+    /* Force override */
+    box-shadow: 0 0 30px rgba(0, 113, 227, 0.6) !important;
+    /* Stronger glow */
+    transform: scale(1.04) !important;
+    /* Slightly more pop */
+}
+
+/* 2. Volunteer - Secondary (Solid White) */
+.home-page .cta-buttons .btn-secondary {
+    background-color: white !important;
+    color: #1d1d1f !important;
+    border: 1px solid white;
+}
+
+.home-page .cta-buttons .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    transform: scale(1.04) !important;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 3. Explore Classes - Tertiary (Glass Outline) */
+.home-page .cta-buttons .btn-outline {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    /* Very subtle glass */
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    backdrop-filter: blur(12px);
+}
+
+.home-page .cta-buttons .btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-color: white !important;
+    transform: scale(1.04) !important;
+}
+
+/* Ensure no override interferes */
+.home-page .cta-buttons .btn:active {
+    transform: scale(0.96) !important;
 }
 
 /* Responsive */

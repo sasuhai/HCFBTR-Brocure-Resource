@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react';
 import { useOrganization } from '../context/OrganizationContext';
+import { getDocument } from '../firebase/firestoreService';
 import './Donate.css';
 
 const Icons = {
@@ -14,6 +16,75 @@ const Icons = {
 
 function Donate() {
     const { orgData } = useOrganization();
+    const [content, setContent] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const getDefaultContent = () => ({
+        header: {
+            title: "Donate",
+            subtitle: "Sumbangan Anda Membawa Perubahan",
+            intro: "Setiap ringgit yang anda sumbangkan adalah pelaburan untuk menyampaikan Islam dan memperkasakan mualaf. Bersama-sama, kita membina masa depan yang lebih cerah."
+        },
+        premiumSection: {
+            title: "Cara Menderma | How to Donate",
+            subtitle: "Scan QR Code atau gunakan butiran bank di bawah",
+            qrPlaceholder: {
+                title: "QR Code",
+                subtitle: "Scan untuk derma"
+            },
+            qrLabel: "Scan dengan banking app anda",
+            dividerText: "ATAU",
+            bankTitle: "Butiran Bank | Bank Details",
+            bankLabels: {
+                accountName: "Nama Akaun | Account Name",
+                bankName: "Nama Bank | Bank Name",
+                accountNumber: "Nombor Akaun | Account Number",
+                copy: "Copy"
+            }
+        },
+        instructions: {
+            title: "Selepas Menderma | After Donating",
+            subtitle: "Sila hantar resit untuk pengesahan dan tax receipt",
+            steps: [
+                { number: 1, title: "Screenshot Resit Pembayaran", desc: "Take a screenshot of your transaction receipt" },
+                { number: 2, title: "Hantar Melalui | Send Via:", desc: "" },
+                { number: 3, title: "Terima Pengesahan", desc: "You'll receive confirmation and tax receipt within 2-3 business days" }
+            ]
+        },
+        thankYou: {
+            title: "Terima Kasih Atas Sokongan Anda!",
+            subtitle: "Thank You For Your Support!",
+            message: "Sumbangan anda membantu kami meneruskan misi untuk menyediakan pendidikan berkualiti kepada komuniti. Setiap ringgit membawa perubahan yang bermakna dalam kehidupan pelajar kami.",
+            stats: [
+                { value: "100%", label: "Untuk Program" },
+                { value: "500+", label: "Pelajar Dibantu" },
+                { value: "10+", label: "Tahun Berkhidmat" }
+            ]
+        }
+    });
+
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const doc = await getDocument('pages', 'donate');
+                if (doc) {
+                    setContent(doc);
+                } else {
+                    setContent(getDefaultContent());
+                }
+            } catch (error) {
+                console.error('Error loading donate page:', error);
+                setContent(getDefaultContent());
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadContent();
+    }, []);
+
+    if (loading) return <div className="loading-screen">Loading...</div>;
+
+    const c = content || getDefaultContent();
 
     return (
         <div className="donate-page">
@@ -21,12 +92,9 @@ function Donate() {
             <section className="donate-header">
                 <div className="container">
                     <div className="donate-header-content text-center">
-                        <h1 className="page-title">Donate</h1>
-                        <p className="page-subtitle">Sumbangan Anda Membawa Perubahan</p>
-                        <p className="donate-intro">
-                            Setiap ringgit yang anda sumbangkan adalah pelaburan untuk menyampaikan Islam dan memperkasakan mualaf.
-                            Bersama-sama, kita membina masa depan yang lebih cerah.
-                        </p>
+                        <h1 className="page-title">{c.header.title}</h1>
+                        <p className="page-subtitle">{c.header.subtitle}</p>
+                        <p className="donate-intro" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: c.header.intro }}></p>
                     </div>
                 </div>
             </section>
@@ -38,8 +106,8 @@ function Donate() {
                         {/* Main Donation Card */}
                         <div className="donation-main-card">
                             <div className="donation-card-header">
-                                <h2><span className="icon-inline"><Icons.Heart /></span> Cara Menderma | How to Donate</h2>
-                                <p className="header-subtitle">Scan QR Code atau gunakan butiran bank di bawah</p>
+                                <h2><span className="icon-inline"><Icons.Heart /></span> {c.premiumSection.title}</h2>
+                                <p className="header-subtitle">{c.premiumSection.subtitle}</p>
                             </div>
 
                             <div className="donation-card-content">
@@ -55,47 +123,46 @@ function Donate() {
                                             />
                                         ) : (
                                             <div className="qr-code-placeholder">
-                                                {/* Replace this div with actual QR code image */}
                                                 <div className="qr-icon"><Icons.Smartphone /></div>
-                                                <p>QR Code</p>
-                                                <span className="qr-hint">Scan untuk derma</span>
+                                                <p>{c.premiumSection.qrPlaceholder?.title || 'QR Code'}</p>
+                                                <span className="qr-hint">{c.premiumSection.qrPlaceholder?.subtitle || 'Scan untuk derma'}</span>
                                             </div>
                                         )}
                                     </div>
                                     <div className="qr-code-label">
                                         <span className="scan-icon"><Icons.Camera /></span>
-                                        <span>Scan dengan banking app anda</span>
+                                        <span>{c.premiumSection.qrLabel}</span>
                                     </div>
                                 </div>
 
                                 {/* Divider */}
                                 <div className="donation-divider">
-                                    <span>ATAU</span>
+                                    <span>{c.premiumSection.dividerText}</span>
                                 </div>
 
                                 {/* Bank Details Section */}
                                 <div className="bank-details-section">
                                     <h3 className="bank-details-title">
                                         <span className="bank-icon"><Icons.Bank /></span>
-                                        Butiran Bank | Bank Details
+                                        {c.premiumSection.bankTitle}
                                     </h3>
 
                                     <div className="bank-info-grid">
                                         <div className="bank-info-item">
-                                            <div className="info-label">Nama Akaun | Account Name</div>
+                                            <div className="info-label">{c.premiumSection.bankLabels?.accountName || 'Account Name'}</div>
                                             <div className="info-value">{orgData?.bank?.accountName}</div>
                                         </div>
 
                                         <div className="bank-info-item">
-                                            <div className="info-label">Nama Bank | Bank Name</div>
+                                            <div className="info-label">{c.premiumSection.bankLabels?.bankName || 'Bank Name'}</div>
                                             <div className="info-value">{orgData?.bank?.bankName}</div>
                                         </div>
 
                                         <div className="bank-info-item featured">
-                                            <div className="info-label">Nombor Akaun | Account Number</div>
+                                            <div className="info-label">{c.premiumSection.bankLabels?.accountNumber || 'Account Number'}</div>
                                             <div className="info-value account-number">{orgData?.bank?.accountNumber}</div>
                                             <button className="copy-btn" onClick={() => navigator.clipboard.writeText(orgData?.bank?.accountNumber)}>
-                                                <Icons.Copy /> Copy
+                                                <Icons.Copy /> {c.premiumSection.bankLabels?.copy || 'Copy'}
                                             </button>
                                         </div>
                                     </div>
@@ -106,77 +173,58 @@ function Donate() {
                         {/* Instructions Card */}
                         <div className="donation-instructions-card">
                             <div className="instructions-header">
-                                <h3><span className="icon-inline"><Icons.Mail /></span> Selepas Menderma | After Donating</h3>
-                                <p>Sila hantar resit untuk pengesahan dan tax receipt</p>
+                                <h3><span className="icon-inline"><Icons.Mail /></span> {c.instructions.title}</h3>
+                                <p>{c.instructions.subtitle}</p>
                             </div>
 
                             <div className="instructions-content">
-                                <div className="instruction-step">
-                                    <div className="step-number">1</div>
-                                    <div className="step-content">
-                                        <h4>Screenshot Resit Pembayaran</h4>
-                                        <p>Take a screenshot of your transaction receipt</p>
-                                    </div>
-                                </div>
+                                {c.instructions.steps?.map((step, idx) => (
+                                    <div className="instruction-step" key={idx}>
+                                        <div className="step-number">{step.number}</div>
+                                        <div className="step-content">
+                                            <h4>{step.title}</h4>
+                                            {step.desc && <p>{step.desc}</p>}
+                                            {/* Inject contact options if it's the contact step (index 1) */}
+                                            {idx === 1 && (
+                                                <div className="contact-options">
+                                                    {orgData?.phone?.[0] && (
+                                                        <a href={`https://wa.me/${orgData.phone[0].replace(/[^0-9]/g, '')}`} className="contact-option whatsapp" target="_blank" rel="noopener noreferrer">
+                                                            <span className="contact-icon"><Icons.Message /></span>
+                                                            <div>
+                                                                <div className="contact-label">WhatsApp</div>
+                                                                <div className="contact-value">{orgData.phone[0]}</div>
+                                                            </div>
+                                                        </a>
+                                                    )}
 
-                                <div className="instruction-step">
-                                    <div className="step-number">2</div>
-                                    <div className="step-content">
-                                        <h4>Hantar Melalui | Send Via:</h4>
-                                        <div className="contact-options">
-                                            {orgData?.phone?.[0] && (
-                                                <a href={`https://wa.me/${orgData.phone[0].replace(/[^0-9]/g, '')}`} className="contact-option whatsapp" target="_blank" rel="noopener noreferrer">
-                                                    <span className="contact-icon"><Icons.Message /></span>
-                                                    <div>
-                                                        <div className="contact-label">WhatsApp</div>
-                                                        <div className="contact-value">{orgData.phone[0]}</div>
-                                                    </div>
-                                                </a>
-                                            )}
-
-                                            <a href={`mailto:${orgData?.email}`} className="contact-option email">
-                                                <span className="contact-icon"><Icons.Mail /></span>
-                                                <div>
-                                                    <div className="contact-label">Email</div>
-                                                    <div className="contact-value">{orgData?.email}</div>
+                                                    <a href={`mailto:${orgData?.email}`} className="contact-option email">
+                                                        <span className="contact-icon"><Icons.Mail /></span>
+                                                        <div>
+                                                            <div className="contact-label">Email</div>
+                                                            <div className="contact-value">{orgData?.email}</div>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                            </a>
+                                            )}
                                         </div>
                                     </div>
-                                </div>
-
-                                <div className="instruction-step">
-                                    <div className="step-number">3</div>
-                                    <div className="step-content">
-                                        <h4>Terima Pengesahan</h4>
-                                        <p>You'll receive confirmation and tax receipt within 2-3 business days</p>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
 
                         {/* Thank You Card */}
                         <div className="thank-you-card">
                             <div className="thank-you-icon"><Icons.Check /></div>
-                            <h3>Terima Kasih Atas Sokongan Anda!</h3>
-                            <p className="thank-you-subtitle">Thank You For Your Support!</p>
-                            <p className="thank-you-message">
-                                Sumbangan anda membantu kami meneruskan misi untuk menyediakan pendidikan berkualiti
-                                kepada komuniti. Setiap ringgit membawa perubahan yang bermakna dalam kehidupan pelajar kami.
-                            </p>
+                            <h3>{c.thankYou.title}</h3>
+                            <p className="thank-you-subtitle">{c.thankYou.subtitle}</p>
+                            <p className="thank-you-message" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: c.thankYou.message }}></p>
                             <div className="thank-you-stats">
-                                <div className="thank-you-stat">
-                                    <div className="stat-value">100%</div>
-                                    <div className="stat-label">Untuk Program</div>
-                                </div>
-                                <div className="thank-you-stat">
-                                    <div className="stat-value">500+</div>
-                                    <div className="stat-label">Pelajar Dibantu</div>
-                                </div>
-                                <div className="thank-you-stat">
-                                    <div className="stat-value">10+</div>
-                                    <div className="stat-label">Tahun Berkhidmat</div>
-                                </div>
+                                {c.thankYou.stats?.map((stat, idx) => (
+                                    <div className="thank-you-stat" key={idx}>
+                                        <div className="stat-value">{stat.value}</div>
+                                        <div className="stat-label">{stat.label}</div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

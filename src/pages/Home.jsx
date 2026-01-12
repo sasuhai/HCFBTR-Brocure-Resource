@@ -112,7 +112,7 @@ function Home() {
                         <span className="text-gradient">{hero.title.split(' ').slice(-2).join(' ')}</span>
                     </h1>
                     <p className="hero-subtitle">{hero.subtitle}</p>
-                    <p className="hero-description">{hero.description}</p>
+                    <p className="hero-description" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: hero.description }}></p>
                     <div className="hero-cta">
                         <Link to="/donate" className="btn btn-primary btn-lg shine-effect">
                             {/* Assuming hero.ctaPrimary and hero.ctaSecondary are part of the default content now */}
@@ -152,8 +152,8 @@ function Home() {
                         <div className="about-text">
                             <h2 className="section-title">{about.title}</h2>
                             <p className="section-subtitle">{about.subtitle}</p>
-                            <p>{about.paragraph1}</p>
-                            <p>{about.paragraph2}</p>
+                            <p style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: about.paragraph1 }}></p>
+                            <p style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: about.paragraph2 }}></p>
                             <Link to="/journey" className="btn btn-secondary mt-lg">
                                 Baca Perjalanan Kami <span>→</span>
                             </Link>
@@ -227,9 +227,7 @@ function Home() {
                     <div className="section-header text-center">
                         <h2 className="section-title">{whyChooseUs.title}</h2>
                         <p className="section-subtitle">{whyChooseUs.subtitle}</p>
-                        <p className="section-description">
-                            {whyChooseUs.description}
-                        </p>
+                        <p className="section-description" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: whyChooseUs.description }}></p>
                     </div>
                     <div className="features-grid grid grid-2">
                         {features.map((feature, index) => (
@@ -251,15 +249,16 @@ function Home() {
                         <div className="cta-content">
                             <h2 className="cta-title">{cta.title}</h2>
                             <p className="cta-subtitle">{cta.subtitle}</p>
-                            <p className="cta-description">
-                                {cta.description}
-                            </p>
+                            <p className="cta-description" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: cta.description }}></p>
                             <div className="cta-buttons">
-                                <Link to="/donate" className="btn btn-primary btn-lg">
-                                    Support Our Mission
+                                <Link to="/volunteer" className="btn btn-secondary btn-lg">
+                                    Support Our Mission (Volunteer)
                                 </Link>
-                                <Link to="/classes" className="btn btn-outline btn-lg">
+                                <Link to="/classes" className="btn btn-outline btn-lg" style={{ borderColor: 'white', color: 'white' }}>
                                     Explore Classes
+                                </Link>
+                                <Link to="/donate" className="btn btn-primary btn-lg">
+                                    Donate Now
                                 </Link>
                             </div>
                         </div>

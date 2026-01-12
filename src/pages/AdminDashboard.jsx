@@ -13,6 +13,8 @@ import './AdminDashboard.css';
 
 const Icons = {
     Lock: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>,
+    Hand: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0" /><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2" /><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8" /><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" /></svg>,
+    Heart: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>,
     LogOut: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>,
     Users: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
     FileText: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>,
@@ -61,7 +63,7 @@ function AdminDashboard() {
     });
 
     // Pages state
-    const [pages, setPages] = useState({ home: null, journey: null });
+    const [pages, setPages] = useState({ home: null, journey: null, donate: null, volunteer: null, classes: null });
     const [editingPage, setEditingPage] = useState(null); // 'home' or 'journey'
     const [pageForm, setPageForm] = useState(null);
 
@@ -84,17 +86,26 @@ function AdminDashboard() {
     const loadData = async () => {
         setLoading(true);
         try {
-            const [usersData, blogData, classesData, homeData, journeyData] = await Promise.all([
+            const [usersData, blogData, classesData, homeData, journeyData, donateData, volunteerData, classesPageData] = await Promise.all([
                 getAllDocuments('users'),
                 getAllDocuments('blog-posts'),
                 getAllDocuments('classes'),
                 getDocument('pages', 'home'),
-                getDocument('pages', 'journey')
+                getDocument('pages', 'journey'),
+                getDocument('pages', 'donate'),
+                getDocument('pages', 'volunteer'),
+                getDocument('pages', 'classes')
             ]);
             setUsers(usersData);
             setBlogPosts(blogData.sort((a, b) => new Date(b.date) - new Date(a.date)));
             setClasses(classesData);
-            setPages({ home: homeData, journey: journeyData });
+            setPages({
+                home: homeData,
+                journey: journeyData,
+                donate: donateData,
+                volunteer: volunteerData,
+                classes: classesPageData
+            });
         } catch (error) {
             showMessage('Error loading data: ' + error.message, 'error');
         }
@@ -708,34 +719,24 @@ function AdminDashboard() {
 
                                 <div className="form-row">
                                     <div className="form-group">
-                                        <label>Audience *</label>
+                                        <label>Audience</label>
                                         <input
                                             type="text"
                                             value={classForm.audience}
                                             onChange={(e) => setClassForm({ ...classForm, audience: e.target.value })}
-                                            required
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label>Schedule *</label>
+                                        <label>Schedule</label>
                                         <input
                                             type="text"
                                             value={classForm.schedule}
                                             onChange={(e) => setClassForm({ ...classForm, schedule: e.target.value })}
-                                            required
                                         />
                                     </div>
                                 </div>
 
                                 <div className="form-row">
-                                    <div className="form-group">
-                                        <label>Icon/Emoji</label>
-                                        <input
-                                            type="text"
-                                            value={classForm.icon}
-                                            onChange={(e) => setClassForm({ ...classForm, icon: e.target.value })}
-                                        />
-                                    </div>
                                     <div className="form-group">
                                         <label>Color</label>
                                         <select
@@ -782,7 +783,6 @@ function AdminDashboard() {
                                         <tr key={classItem.id}>
                                             <td>
                                                 <div className="post-title">
-                                                    <span>{classItem.icon}</span>
                                                     {classItem.title}
                                                 </div>
                                             </td>
@@ -820,9 +820,14 @@ function AdminDashboard() {
                 {/* Pages Tab */}
                 {activeTab === 'pages' && (
                     <div className="tab-content">
-                        <div className="content-header">
-                            <h2>Manage Pages</h2>
-                            <p>Edit Home and Journey page content</p>
+                        <div className="content-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div>
+                                <h2>Manage Pages</h2>
+                                <p>Edit Home, Journey, Donate, and Volunteer page content</p>
+                            </div>
+                            <a href="#/migrate-pages" target="_blank" className="btn btn-secondary">
+                                <span className="icon-inline">�</span> Backup & Restore Data
+                            </a>
                         </div>
 
                         <div className="pages-grid" style={{ display: 'grid', gap: '2rem', gridTemplateColumns: '1fr 1fr' }}>
@@ -885,6 +890,91 @@ function AdminDashboard() {
                                     <p>No content found. Please run migration first.</p>
                                 )}
                             </div>
+
+                            {/* Donate Page */}
+                            <div className="page-card card">
+                                <h3><span className="icon-inline"><Icons.Heart /></span> Donate Page</h3>
+                                {pages.donate ? (
+                                    <>
+                                        <div className="page-sections" style={{ marginTop: '1rem' }}>
+                                            <h4>Content Sections:</h4>
+                                            <ul style={{ listStyle: 'none', padding: 0 }}>
+                                                <li>✓ Header Section</li>
+                                                <li>✓ Premium Section</li>
+                                                <li>✓ Instructions</li>
+                                                <li>✓ Thank You Content</li>
+                                            </ul>
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                setEditingPage('donate');
+                                                setPageForm(JSON.stringify(pages.donate, null, 2));
+                                            }}
+                                            className="btn btn-primary mt-md"
+                                        >
+                                            <span className="icon-inline"><Icons.Edit /></span> Edit Donate Page
+                                        </button>
+                                    </>
+                                ) : (
+                                    <p>No content found. Please run migration first.</p>
+                                )}
+                            </div>
+
+                            {/* Volunteer Page */}
+                            <div className="page-card card">
+                                <h3><span className="icon-inline"><Icons.Hand /></span> Volunteer Page</h3>
+                                {pages.volunteer ? (
+                                    <>
+                                        <div className="page-sections" style={{ marginTop: '1rem' }}>
+                                            <h4>Content Sections:</h4>
+                                            <ul style={{ listStyle: 'none', padding: 0 }}>
+                                                <li>✓ Header Section</li>
+                                                <li>✓ Opportunities ({pages.volunteer.opportunities?.length || 0})</li>
+                                                <li>✓ Benefits ({pages.volunteer.benefits?.length || 0})</li>
+                                                <li>✓ Testimonial</li>
+                                            </ul>
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                setEditingPage('volunteer');
+                                                setPageForm(JSON.stringify(pages.volunteer, null, 2));
+                                            }}
+                                            className="btn btn-primary mt-md"
+                                        >
+                                            <span className="icon-inline"><Icons.Edit /></span> Edit Volunteer Page
+                                        </button>
+                                    </>
+                                ) : (
+                                    <p>No content found. Please run migration first.</p>
+                                )}
+                            </div>
+
+                            {/* Classes Page */}
+                            <div className="page-card card">
+                                <h3><span className="icon-inline"><Icons.Book /></span> Classes Page</h3>
+                                {pages.classes ? (
+                                    <>
+                                        <div className="page-sections" style={{ marginTop: '1rem' }}>
+                                            <h4>Content Sections:</h4>
+                                            <ul style={{ listStyle: 'none', padding: 0 }}>
+                                                <li>✓ Header Title & Description</li>
+                                                <li>✓ Info Cards (Registration, Fees, Hours)</li>
+                                            </ul>
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                setEditingPage('classes');
+                                                setPageForm(JSON.stringify(pages.classes, null, 2));
+                                            }}
+                                            className="btn btn-primary mt-md"
+                                        >
+                                            <span className="icon-inline"><Icons.Edit /></span> Edit Classes Page
+                                        </button>
+                                    </>
+                                ) : (
+                                    <p>No content found. Please run migration first.</p>
+                                )}
+                            </div>
                         </div>
 
                         {/* JSON Editor Modal */}
@@ -892,7 +982,7 @@ function AdminDashboard() {
                             <div className="modal-overlay" onClick={() => setEditingPage(null)}>
                                 <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '900px', maxHeight: '90vh', overflow: 'auto' }}>
                                     <div className="modal-header">
-                                        <h2>Edit {editingPage === 'home' ? 'Home' : 'Journey'} Page</h2>
+                                        <h2>Edit {editingPage ? editingPage.charAt(0).toUpperCase() + editingPage.slice(1) : ''} Page</h2>
                                         <button className="btn-close" onClick={() => setEditingPage(null)}>✖️</button>
                                     </div>
                                     <div className="modal-body">
@@ -900,6 +990,21 @@ function AdminDashboard() {
                                             Edit the JSON content below. Be careful with syntax - wrong format may break the page.
                                             <a href={`/#/migrate-pages`} target="_blank" style={{ marginLeft: '1rem' }}>🔄 Run Migration</a>
                                         </p>
+                                        <div className="formatting-guide" style={{
+                                            background: '#f5f5f7',
+                                            padding: '1rem',
+                                            borderRadius: '8px',
+                                            marginBottom: '1rem',
+                                            fontSize: '0.9rem',
+                                            color: '#333'
+                                        }}>
+                                            <strong>Formatting Guide:</strong>
+                                            <ul style={{ margin: '0.5rem 0 0 1.2rem', padding: 0 }}>
+                                                <li><b>Bold:</b> Use <code>&lt;b&gt;text&lt;/b&gt;</code> or <code>&lt;strong&gt;text&lt;/strong&gt;</code></li>
+                                                <li><i>Italic:</i> Use <code>&lt;i&gt;text&lt;/i&gt;</code> or <code>&lt;em&gt;text&lt;/em&gt;</code></li>
+                                                <li>Line Break: Use <code>\n</code> or <code>&lt;br&gt;</code></li>
+                                            </ul>
+                                        </div>
                                         <textarea
                                             value={pageForm}
                                             onChange={(e) => setPageForm(e.target.value)}
@@ -1097,7 +1202,7 @@ function AdminDashboard() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }
 

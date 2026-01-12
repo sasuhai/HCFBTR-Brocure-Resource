@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getDocument } from '../firebase/firestoreService';
 import './Volunteer.css';
 
 const Icons = {
@@ -12,6 +13,9 @@ const Icons = {
 };
 
 function Volunteer() {
+    const [content, setContent] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -22,65 +26,100 @@ function Volunteer() {
         message: ''
     });
 
-    const opportunities = [
-        {
-            icon: <Icons.Teacher />,
-            title: 'Guru Kelas',
-            subtitle: 'Class Teacher',
-            description: 'Mengajar kelas Al-Quran, Bahasa Arab, atau subjek akademik',
-            commitment: '4-6 jam seminggu',
-            requirements: ['Pengetahuan dalam bidang berkaitan', 'Kesabaran & dedikasi', 'Komitmen minimum 3 bulan']
+    const getDefaultContent = () => ({
+        header: {
+            title: "Volunteer",
+            subtitle: "Jadilah Sebahagian Daripada Perubahan",
+            intro: "Sertai kami dalam memberi impak positif kepada generasi masa depan. Masa dan kepakaran anda boleh mengubah hidup ratusan pelajar."
         },
-        {
-            icon: <Icons.Palette />,
-            title: 'Fasilitator Aktiviti',
-            subtitle: 'Activity Facilitator',
-            description: 'Mengendalikan aktiviti kokurikulum, sukan, dan program khas',
-            commitment: '2-4 jam seminggu',
-            requirements: ['Kreatif & energetik', 'Suka bekerja dengan kanak-kanak', 'Kemahiran dalam bidang tertentu (seni, sukan, dll)']
+        opportunities: [
+            {
+                icon: 'Teacher',
+                title: 'Guru Kelas',
+                subtitle: 'Class Teacher',
+                description: 'Mengajar kelas Al-Quran, Bahasa Arab, atau subjek akademik',
+                commitment: '4-6 jam seminggu',
+                requirements: ['Pengetahuan dalam bidang berkaitan', 'Kesabaran & dedikasi', 'Komitmen minimum 3 bulan']
+            },
+            {
+                icon: 'Palette',
+                title: 'Fasilitator Aktiviti',
+                subtitle: 'Activity Facilitator',
+                description: 'Mengendalikan aktiviti kokurikulum, sukan, dan program khas',
+                commitment: '2-4 jam seminggu',
+                requirements: ['Kreatif & energetik', 'Suka bekerja dengan kanak-kanak', 'Kemahiran dalam bidang tertentu (seni, sukan, dll)']
+            },
+            {
+                icon: 'Laptop',
+                title: 'Sokongan Pentadbiran',
+                subtitle: 'Administrative Support',
+                description: 'Membantu dalam pengurusan, dokumentasi, dan komunikasi',
+                commitment: '3-5 jam seminggu',
+                requirements: ['Kemahiran komputer asas', 'Teratur & teliti', 'Boleh bekerja dari rumah']
+            },
+            {
+                icon: 'Phone',
+                title: 'Media & Komunikasi',
+                subtitle: 'Media & Communications',
+                description: 'Menguruskan media sosial, membuat konten, dan dokumentasi',
+                commitment: '3-4 jam seminggu',
+                requirements: ['Kemahiran fotografi/videografi', 'Kreatif dalam konten', 'Familiar dengan media sosial']
+            },
+            {
+                icon: 'HeartHandshake',
+                title: 'Mentor Pelajar',
+                subtitle: 'Student Mentor',
+                description: 'Membimbing pelajar secara peribadi, motivasi dan sokongan emosi',
+                commitment: '2-3 jam seminggu',
+                requirements: ['Empati & kemahiran komunikasi', 'Matang & bertanggungjawab', 'Komitmen jangka panjang']
+            },
+            {
+                icon: 'Calendar',
+                title: 'Penganjur Acara',
+                subtitle: 'Event Organizer',
+                description: 'Merancang dan melaksanakan program khas dan acara tahunan',
+                commitment: 'Fleksibel mengikut acara',
+                requirements: ['Kemahiran pengurusan projek', 'Kreatif & proaktif', 'Boleh bekerja dalam pasukan']
+            }
+        ],
+        benefits: [
+            'Pengalaman berharga dalam pendidikan dan pembangunan komuniti',
+            'Berjumpa dan berjejaring dengan individu yang bersemangat',
+            'Sijil penghargaan dan surat rujukan',
+            'Peluang pembelajaran dan pembangunan kemahiran',
+            'Kepuasan dalaman memberi impak positif',
+            'Jemputan ke acara dan majlis khas'
+        ],
+        form: {
+            title: "Daftar Minat Anda",
+            subtitle: "Register Your Interest",
+            description: "Sila isi borang di bawah dan kami akan menghubungi anda untuk perbincangan lanjut."
         },
-        {
-            icon: <Icons.Laptop />,
-            title: 'Sokongan Pentadbiran',
-            subtitle: 'Administrative Support',
-            description: 'Membantu dalam pengurusan, dokumentasi, dan komunikasi',
-            commitment: '3-5 jam seminggu',
-            requirements: ['Kemahiran komputer asas', 'Teratur & teliti', 'Boleh bekerja dari rumah']
-        },
-        {
-            icon: <Icons.Phone />,
-            title: 'Media & Komunikasi',
-            subtitle: 'Media & Communications',
-            description: 'Menguruskan media sosial, membuat konten, dan dokumentasi',
-            commitment: '3-4 jam seminggu',
-            requirements: ['Kemahiran fotografi/videografi', 'Kreatif dalam konten', 'Familiar dengan media sosial']
-        },
-        {
-            icon: <Icons.HeartHandshake />,
-            title: 'Mentor Pelajar',
-            subtitle: 'Student Mentor',
-            description: 'Membimbing pelajar secara peribadi, motivasi dan sokongan emosi',
-            commitment: '2-3 jam seminggu',
-            requirements: ['Empati & kemahiran komunikasi', 'Matang & bertanggungjawab', 'Komitmen jangka panjang']
-        },
-        {
-            icon: <Icons.Calendar />,
-            title: 'Penganjur Acara',
-            subtitle: 'Event Organizer',
-            description: 'Merancang dan melaksanakan program khas dan acara tahunan',
-            commitment: 'Fleksibel mengikut acara',
-            requirements: ['Kemahiran pengurusan projek', 'Kreatif & proaktif', 'Boleh bekerja dalam pasukan']
+        testimonial: {
+            quote: "Menjadi sukarelawan di HCFBTR adalah antara keputusan terbaik dalam hidup saya. Saya datang untuk mengajar, tetapi saya belajar lebih banyak tentang kesabaran, kasih sayang, dan erti sebenar memberi. Setiap senyuman pelajar adalah hadiah yang tidak ternilai.",
+            author: "Ahmad bin Hassan",
+            role: "Guru Sukarelawan sejak 2019 | Volunteer Teacher since 2019"
         }
-    ];
+    });
 
-    const benefits = [
-        'Pengalaman berharga dalam pendidikan dan pembangunan komuniti',
-        'Berjumpa dan berjejaring dengan individu yang bersemangat',
-        'Sijil penghargaan dan surat rujukan',
-        'Peluang pembelajaran dan pembangunan kemahiran',
-        'Kepuasan dalaman memberi impak positif',
-        'Jemputan ke acara dan majlis khas'
-    ];
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const doc = await getDocument('pages', 'volunteer');
+                if (doc) {
+                    setContent(doc);
+                } else {
+                    setContent(getDefaultContent());
+                }
+            } catch (error) {
+                console.error('Error loading volunteer page:', error);
+                setContent(getDefaultContent());
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadContent();
+    }, []);
 
     const handleChange = (e) => {
         setFormData({
@@ -96,18 +135,19 @@ function Volunteer() {
         console.log('Form data:', formData);
     };
 
+    if (loading) return <div className="loading-screen">Loading...</div>;
+
+    const c = content || getDefaultContent();
+
     return (
         <div className="volunteer-page">
             {/* Header */}
             <section className="volunteer-header">
                 <div className="container">
                     <div className="volunteer-header-content text-center">
-                        <h1 className="page-title">Volunteer</h1>
-                        <p className="page-subtitle">Jadilah Sebahagian Daripada Perubahan</p>
-                        <p className="volunteer-intro">
-                            Sertai kami dalam memberi impak positif kepada generasi masa depan.
-                            Masa dan kepakaran anda boleh mengubah hidup ratusan pelajar.
-                        </p>
+                        <h1 className="page-title">{c.header.title}</h1>
+                        <p className="page-subtitle">{c.header.subtitle}</p>
+                        <p className="volunteer-intro" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: c.header.intro }}></p>
                     </div>
                 </div>
             </section>
@@ -122,25 +162,28 @@ function Volunteer() {
                         </span>
                     </h2>
                     <div className="opportunities-grid">
-                        {opportunities.map((opp, index) => (
-                            <div key={index} className="opportunity-card card">
-                                <div className="opportunity-icon">{opp.icon}</div>
-                                <h3 className="opportunity-title">{opp.title}</h3>
-                                <p className="opportunity-subtitle">{opp.subtitle}</p>
-                                <p className="opportunity-description">{opp.description}</p>
-                                <div className="opportunity-commitment">
-                                    <strong>Komitmen:</strong> {opp.commitment}
+                        {c.opportunities?.map((opp, index) => {
+                            const IconComponent = Icons[opp.icon] || Icons.Check;
+                            return (
+                                <div key={index} className="opportunity-card card">
+                                    <div className="opportunity-icon"><IconComponent /></div>
+                                    <h3 className="opportunity-title">{opp.title}</h3>
+                                    <p className="opportunity-subtitle">{opp.subtitle}</p>
+                                    <p className="opportunity-description" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: opp.description }}></p>
+                                    <div className="opportunity-commitment">
+                                        <strong>Komitmen:</strong> {opp.commitment}
+                                    </div>
+                                    <div className="opportunity-requirements">
+                                        <strong>Keperluan:</strong>
+                                        <ul>
+                                            {opp.requirements?.map((req, idx) => (
+                                                <li key={idx}>{req}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div className="opportunity-requirements">
-                                    <strong>Keperluan:</strong>
-                                    <ul>
-                                        {opp.requirements.map((req, idx) => (
-                                            <li key={idx}>{req}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </section>
@@ -155,7 +198,7 @@ function Volunteer() {
                         </span>
                     </h2>
                     <div className="benefits-list">
-                        {benefits.map((benefit, index) => (
+                        {c.benefits?.map((benefit, index) => (
                             <div key={index} className="benefit-item">
                                 <span className="benefit-icon"><Icons.Check /></span>
                                 <span className="benefit-text">{benefit}</span>
@@ -170,11 +213,9 @@ function Volunteer() {
                 <div className="container">
                     <div className="form-container">
                         <div className="form-header text-center">
-                            <h2 className="form-title">Daftar Minat Anda</h2>
-                            <p className="form-subtitle">Register Your Interest</p>
-                            <p className="form-description">
-                                Sila isi borang di bawah dan kami akan menghubungi anda untuk perbincangan lanjut.
-                            </p>
+                            <h2 className="form-title">{c.form.title}</h2>
+                            <p className="form-subtitle">{c.form.subtitle}</p>
+                            <p className="form-description">{c.form.description}</p>
                         </div>
 
                         <form onSubmit={handleSubmit} className="volunteer-form">
@@ -291,13 +332,11 @@ function Volunteer() {
                     <div className="volunteer-testimonial text-center">
                         <div className="testimonial-quote-large">"</div>
                         <blockquote className="testimonial-text">
-                            Menjadi sukarelawan di HCFBTR adalah antara keputusan terbaik dalam hidup saya.
-                            Saya datang untuk mengajar, tetapi saya belajar lebih banyak tentang kesabaran,
-                            kasih sayang, dan erti sebenar memberi. Setiap senyuman pelajar adalah hadiah yang tidak ternilai.
+                            {c.testimonial.quote}
                         </blockquote>
                         <div className="testimonial-author-large">
-                            <div className="author-name-large">Ahmad bin Hassan</div>
-                            <div className="author-role-large">Guru Sukarelawan sejak 2019 | Volunteer Teacher since 2019</div>
+                            <div className="author-name-large">{c.testimonial.author}</div>
+                            <div className="author-role-large">{c.testimonial.role}</div>
                         </div>
                     </div>
                 </div>

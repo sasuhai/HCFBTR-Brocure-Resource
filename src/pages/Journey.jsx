@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getDocument } from '../firebase/firestoreService';
 import './Journey.css';
 
@@ -15,12 +15,23 @@ const Icons = {
     Trophy: () => <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8" /><path d="M12 17v4" /><path d="M7 4h10" /><path d="M17 4v8a5 5 0 0 1-10 0V4" /><line x1="12" y1="4" x2="12" y2="2" /></svg>,
     Target: () => <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>,
     Globe: () => <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>,
-    Heart: () => <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
+    Heart: () => <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>,
+    ArrowLeft: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>,
+    ArrowRight: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
 };
 
 function Journey() {
     const [pageContent, setPageContent] = useState(null);
     const [loading, setLoading] = useState(true);
+    const scrollRef = useRef(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const amount = 340; // Card width + margin approx
+            scrollRef.current.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' });
+        }
+    };
 
     useEffect(() => {
         loadPageContent();
@@ -150,6 +161,22 @@ function Journey() {
 
     const { header, timeline, testimonials, milestones, forward } = pageContent;
 
+
+
+    const nextTestimonial = () => {
+        if (currentIndex < testimonials.length - 3) {
+            setCurrentIndex(prev => prev + 1);
+        }
+    };
+
+    const prevTestimonial = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(prev => prev - 1);
+        }
+    };
+
+    const visibleTestimonials = testimonials.slice(currentIndex, currentIndex + 3);
+
     return (
         <div className="journey-page">
             {/* Header */}
@@ -158,7 +185,7 @@ function Journey() {
                     <div className="journey-header-content text-center">
                         <h1 className="page-title animate-fade-in">{header.title}</h1>
                         <p className="page-subtitle">{header.subtitle}</p>
-                        <p className="journey-intro">{header.intro}</p>
+                        <p className="journey-intro" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: header.intro }}></p>
                     </div>
                 </div>
             </section>
@@ -178,7 +205,7 @@ function Journey() {
                                     <div className="timeline-year">{item.year}</div>
                                     <h3 className="timeline-title">{item.title}</h3>
                                     <p className="timeline-subtitle">{item.subtitle}</p>
-                                    <p className="timeline-description">{item.description}</p>
+                                    <p className="timeline-description" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: item.description }}></p>
                                 </div>
                             </div>
                         ))}
@@ -206,20 +233,46 @@ function Journey() {
             <section className="testimonials-section section">
                 <div className="container">
                     <h2 className="section-title text-center mb-2xl">Suara Mereka | Their Voices</h2>
-                    <div className="testimonials-grid">
-                        {testimonials.map((testimonial, index) => (
-                            <div key={index} className="testimonial-card card">
-                                <div className="quote-icon">"</div>
-                                <p className="testimonial-quote">{testimonial.quote}</p>
-                                <div className="testimonial-author">
-                                    <div className="author-image">{testimonial.image}</div>
-                                    <div className="author-info">
-                                        <div className="author-name">{testimonial.name}</div>
-                                        <div className="author-role">{testimonial.role}</div>
+                    <div className="testimonials-wrapper">
+                        {testimonials.length > 3 && (
+                            <>
+                                <button
+                                    className="scroll-btn scroll-btn-left"
+                                    onClick={prevTestimonial}
+                                    style={{ opacity: currentIndex === 0 ? 0.3 : 1, pointerEvents: currentIndex === 0 ? 'none' : 'auto' }}
+                                    aria-label="Previous"
+                                >
+                                    <Icons.ArrowLeft />
+                                </button>
+                                <button
+                                    className="scroll-btn scroll-btn-right"
+                                    onClick={nextTestimonial}
+                                    style={{ opacity: currentIndex >= testimonials.length - 3 ? 0.3 : 1, pointerEvents: currentIndex >= testimonials.length - 3 ? 'none' : 'auto' }}
+                                    aria-label="Next"
+                                >
+                                    <Icons.ArrowRight />
+                                </button>
+                            </>
+                        )}
+                        {/* Always use center-mode logic within the wrapper since we only show 3 */}
+                        <div className="testimonials-grid center-mode">
+                            {visibleTestimonials.map((testimonial, index) => {
+                                const globalIndex = currentIndex + index;
+                                const colorClass = ['color-blue', 'color-orange', 'color-pink'][globalIndex % 3];
+                                return (
+                                    <div key={index} className={`testimonial-card card ${colorClass}`}>
+                                        <p className="testimonial-quote">{testimonial.quote}</p>
+                                        <div className="testimonial-author">
+                                            <div className="author-image">{testimonial.image}</div>
+                                            <div className="author-info">
+                                                <div className="author-name">{testimonial.name}</div>
+                                                <div className="author-role">{testimonial.role}</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        ))}
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -230,7 +283,7 @@ function Journey() {
                     <div className="forward-content text-center">
                         <h2 className="forward-title">{forward.title}</h2>
                         <p className="forward-subtitle">{forward.subtitle}</p>
-                        <p className="forward-description">{forward.description}</p>
+                        <p className="forward-description" style={{ whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: forward.description }}></p>
                         <div className="forward-vision">
                             {forward.vision.map((item, index) => (
                                 <div key={index} className="vision-item">
