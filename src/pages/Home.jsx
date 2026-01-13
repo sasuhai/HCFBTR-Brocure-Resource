@@ -167,6 +167,7 @@ function Home() {
             </section>
 
             {/* Social Feed Section (Facebook) */}
+
             <section className="social-section section" style={{ backgroundColor: '#f8fafc' }}>
                 <div className="container">
                     <div className="section-header text-center mb-2xl">
@@ -177,11 +178,12 @@ function Home() {
 
                     <div className="social-feed-wrapper">
                         {/* Facebook Page Plugin Iframe (Reliable Method) */}
-                        <div className="fb-feed-container card" style={{ padding: '0', overflow: 'hidden', minHeight: '500px', height: '800px', position: 'relative' }}>
+                        <div className="fb-feed-container card" style={{ padding: '0', overflow: 'hidden', minHeight: '300px', height: '500px', position: 'relative', width: '340px', margin: '0 auto' }}>
                             <iframe
-                                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FHCF.btr&tabs=timeline%2Cevents&width=500&height=800&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                                key="fb-feed-adapt-test"
+                                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FHCF.btr&tabs=timeline&width=500&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false"
                                 width="100%"
-                                height="100%"
+                                height="500"
                                 style={{ border: 'none', overflow: 'hidden' }}
                                 scrolling="no"
                                 frameBorder="0"

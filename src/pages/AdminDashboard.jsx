@@ -9,6 +9,7 @@ import {
     updateDocument,
     deleteDocument
 } from '../firebase/firestoreService';
+import AnalyticsChart from '../components/AnalyticsChart';
 import './AdminDashboard.css';
 
 const Icons = {
@@ -30,14 +31,19 @@ const Icons = {
     Home: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
     Rocket: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" /><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /></svg>,
     Star: () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>,
-    Settings: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>
+    Settings: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>,
+    Activity: () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
 };
 
 function AdminDashboard() {
     const { user, isAdmin, logout, createAdminUser } = useAuth();
     const { orgData, updateOrgData } = useOrganization();
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('users'); // users, blog, classes, pages, settings
+    const [activeTab, setActiveTab] = useState('analytics'); // Default to analytics for visibility
+
+    // Analytics state
+    const [analyticsData, setAnalyticsData] = useState([]);
+    const [analyticsSummary, setAnalyticsSummary] = useState({ totalViews: 0, totalVisitors: 0, topPages: [] });
 
     // Users state
     const [users, setUsers] = useState([]);
@@ -73,6 +79,7 @@ function AdminDashboard() {
 
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(null);
+    const [showActions, setShowActions] = useState(false);
 
     // Redirect if not admin
     useEffect(() => {
@@ -86,7 +93,7 @@ function AdminDashboard() {
     const loadData = async () => {
         setLoading(true);
         try {
-            const [usersData, blogData, classesData, homeData, journeyData, donateData, volunteerData, classesPageData] = await Promise.all([
+            const [usersData, blogData, classesData, homeData, journeyData, donateData, volunteerData, classesPageData, analyticsRaw] = await Promise.all([
                 getAllDocuments('users'),
                 getAllDocuments('blog-posts'),
                 getAllDocuments('classes'),
@@ -94,7 +101,8 @@ function AdminDashboard() {
                 getDocument('pages', 'journey'),
                 getDocument('pages', 'donate'),
                 getDocument('pages', 'volunteer'),
-                getDocument('pages', 'classes')
+                getDocument('pages', 'classes'),
+                getAllDocuments('analytics_daily')
             ]);
             setUsers(usersData);
             setBlogPosts(blogData.sort((a, b) => new Date(b.date) - new Date(a.date)));
@@ -106,11 +114,86 @@ function AdminDashboard() {
                 volunteer: volunteerData,
                 classes: classesPageData
             });
+
+            // Process Analytics
+            // Sort by Date Descending
+            const sortedAnalytics = analyticsRaw.sort((a, b) => new Date(b.id) - new Date(a.id));
+            setAnalyticsData(sortedAnalytics);
+
+            console.log('Analytics Loaded:', sortedAnalytics);
+
+            // Compute Summary (Last 30 Days)
+            let totalViews = 0;
+            let totalVisitors = 0;
+            let totalSessions = 0;
+            const pageViewMap = {};
+
+            // Take last 30 entries (days)
+            sortedAnalytics.slice(0, 30).forEach(day => {
+                totalViews += (day.totalPageViews || 0);
+                totalVisitors += (day.dailyActiveUsers || 0); // Changed to use dailyActiveUsers
+                totalSessions += (day.totalSessions || 0);
+
+                if (day.pageViews) {
+                    Object.entries(day.pageViews).forEach(([page, count]) => {
+                        // Restore clean path from flattened key if needed, though we used safe characters
+                        pageViewMap[page] = (pageViewMap[page] || 0) + count;
+                    });
+                }
+
+                // Backward compatibility for malformed dot-notation keys
+                Object.keys(day).forEach(key => {
+                    if (key.startsWith('pageViews.')) {
+                        const pageName = key.split('.')[1];
+                        pageViewMap[pageName] = (pageViewMap[pageName] || 0) + day[key];
+                    }
+                });
+            });
+
+            const topPages = Object.entries(pageViewMap)
+                .sort(([, a], [, b]) => b - a)
+                .slice(0, 10)
+                .map(([page, count]) => ({ page, count }));
+
+            setAnalyticsSummary({ totalViews, totalVisitors, totalSessions, topPages });
+
         } catch (error) {
             showMessage('Error loading data: ' + error.message, 'error');
         }
         setLoading(false);
     };
+
+    const handleResetAnalytics = async () => {
+        if (!window.confirm('DANGER: This will wipe ALL analytics data permanently. Are you sure?')) return;
+
+        setLoading(true);
+        try {
+            const allDays = await getAllDocuments('analytics_daily');
+            const promises = allDays.map(day => deleteDocument('analytics_daily', day.id));
+            await Promise.all(promises);
+
+            showMessage('Analytics data reset successfully!');
+            // Also reset local state
+            setAnalyticsData([]);
+            setAnalyticsSummary({ totalViews: 0, totalVisitors: 0, topPages: [] });
+            loadData();
+        } catch (error) {
+            showMessage('Error resetting analytics: ' + error.message, 'error');
+        }
+        setLoading(false);
+    };
+
+    const handleResetLocalVisitor = () => {
+        if (window.confirm('This will clear your browser\'s tracking data (Active User status). You will count as a NEW visitor on the next reload. Continue?')) {
+            localStorage.removeItem('analytics_visitor_id');
+            localStorage.removeItem('analytics_last_visit');
+            localStorage.removeItem('analytics_first_visit');
+            sessionStorage.removeItem('analytics_session_id');
+            sessionStorage.removeItem('analytics_debounce_path');
+            window.location.reload();
+        }
+    };
+
 
     const showMessage = (text, type = 'success') => {
         setMessage({ text, type });
@@ -360,6 +443,12 @@ function AdminDashboard() {
             {/* Tabs */}
             <div className="admin-tabs">
                 <button
+                    className={`tab ${activeTab === 'analytics' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('analytics')}
+                >
+                    <span className="tab-icon"><Icons.Activity /></span> Analytics
+                </button>
+                <button
                     className={`tab ${activeTab === 'users' ? 'active' : ''}`}
                     onClick={() => setActiveTab('users')}
                 >
@@ -393,6 +482,117 @@ function AdminDashboard() {
 
             {/* Content */}
             <div className="admin-content">
+                {/* Analytics Tab */}
+                {activeTab === 'analytics' && (
+                    <div className="tab-content analytics-dashboard">
+                        <div className="content-header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', width: '100%', gap: '10px' }}>
+                                <div></div>
+                                <h2 style={{ margin: 0, textAlign: 'center' }}>Website Usage (Last 30 Days)</h2>
+                                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    <button
+                                        onClick={() => setShowActions(!showActions)}
+                                        className="btn btn-icon"
+                                        style={{ padding: '4px', background: 'transparent', color: '#666', display: 'flex' }}
+                                        title={showActions ? "Hide Actions" : "Show Actions"}
+                                    >
+                                        <Icons.Settings />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {showActions && (
+                                <div className="action-buttons" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                    <button onClick={loadData} className="btn btn-secondary">
+                                        Refresh Data
+                                    </button>
+                                    <button onClick={handleResetAnalytics} className="btn btn-danger">
+                                        <span className="icon-inline"><Icons.Trash /></span> Reset All Data
+                                    </button>
+                                    <button onClick={handleResetLocalVisitor} className="btn btn-secondary">
+                                        <span className="icon-inline"><Icons.Users /></span> Reset My Status
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="analytics-grid">
+                            <div className="stat-card">
+                                <div className="stat-icon blue"><Icons.Activity /></div>
+                                <div className="stat-info">
+                                    <h3>{analyticsSummary.totalViews}</h3>
+                                    <p>Total Page Views</p>
+                                </div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-icon green"><Icons.Users /></div>
+                                <div className="stat-info">
+                                    <h3>{analyticsSummary.totalVisitors}</h3>
+                                    <p>Active Users (Est)</p>
+                                </div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-icon orange"><Icons.Rocket /></div>
+                                <div className="stat-info">
+                                    <h3>{analyticsSummary.totalSessions}</h3>
+                                    <p>Sessions</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <AnalyticsChart data={analyticsData} topPages={analyticsSummary.topPages} />
+
+                        <div className="analytics-split">
+                            <div className="analytics-section">
+                                <h3>Most Popular Pages</h3>
+                                <div className="data-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Page Path</th>
+                                                <th>Views</th>
+                                                <th>% of Traffic</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {analyticsSummary.topPages.length > 0 ? (
+                                                analyticsSummary.topPages.map((page, index) => (
+                                                    <tr key={page.page}>
+                                                        <td>{page.page.replace(/_/g, '/')}</td>
+                                                        <td><strong>{page.count}</strong></td>
+                                                        <td>{Math.round((page.count / analyticsSummary.totalViews) * 100)}%</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr><td colSpan="3">No data yet. Visit some pages!</td></tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div className="analytics-section">
+                                <h3>Daily Traffic (Last 7 Days)</h3>
+                                <div className="traffic-list">
+                                    {analyticsData.slice(0, 7).map(day => (
+                                        <div key={day.id} className="traffic-row">
+                                            <div className="traffic-date">{new Date(day.id).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</div>
+                                            <div className="traffic-bar-container">
+                                                <div
+                                                    className="traffic-bar"
+                                                    style={{ width: `${Math.min((day.totalPageViews / (analyticsData[0]?.totalPageViews || 1)) * 100, 100)}%` }}
+                                                ></div>
+                                            </div>
+                                            <div className="traffic-count">{day.totalPageViews || 0}</div>
+                                        </div>
+                                    ))}
+                                    {analyticsData.length === 0 && <p>No daily data recorded yet.</p>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* Users Tab */}
                 {activeTab === 'users' && (
                     <div className="tab-content">

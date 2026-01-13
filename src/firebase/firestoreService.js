@@ -10,7 +10,9 @@ import {
     query,
     where,
     orderBy,
-    Timestamp
+    Timestamp,
+    increment,
+    arrayUnion
 } from 'firebase/firestore';
 import { db } from './config';
 
@@ -156,5 +158,22 @@ export const deleteDocument = async (collectionName, docId) => {
     } catch (error) {
         console.error('Error deleting document:', error);
         throw error;
+    }
+};
+
+/**
+ * Update analytics counters atomically
+ * @param {string} dateId - Date string YYYY-MM-DD
+ * @param {object} updates - Object containing specific updates (can include FieldValues)
+ * @returns {Promise<void>}
+ */
+export const updateAnalytics = async (dateId, updates) => {
+    try {
+        const docRef = doc(db, 'analytics_daily', dateId);
+        // We use setDoc with merge: true so it creates the doc if it doesn't exist
+        await setDoc(docRef, updates, { merge: true });
+    } catch (error) {
+        console.error('Error updating analytics:', error);
+        // Silent fail for analytics
     }
 };

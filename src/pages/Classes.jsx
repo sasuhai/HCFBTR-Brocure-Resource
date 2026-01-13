@@ -95,7 +95,7 @@ const Classes = () => {
         }
     };
 
-    console.log('Classes Page State:', { loading, error, classesCount: classes.length, pageContent });
+
 
     // HTML Safety
     const safeHtml = (html) => ({ __html: html || '' });

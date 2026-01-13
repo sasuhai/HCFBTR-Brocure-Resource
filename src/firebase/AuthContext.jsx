@@ -20,15 +20,11 @@ export function AuthProvider({ children }) {
     // Check user role from Firestore
     const checkUserRole = async (uid) => {
         try {
-            console.log('🔍 Checking role for UID:', uid);
             const userDoc = await getDocument('users', uid);
-            console.log('📄 User document:', userDoc);
             if (userDoc) {
-                console.log('✅ Role found:', userDoc.role);
                 setUserRole(userDoc.role || 'user');
                 return userDoc.role;
             }
-            console.log('⚠️ No user document found, defaulting to user role');
             return 'user';
         } catch (error) {
             console.error('❌ Error checking user role:', error);
