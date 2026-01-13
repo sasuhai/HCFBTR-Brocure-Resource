@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../firebase/AuthContext';
 import { useOrganization } from '../context/OrganizationContext';
+import ThemeToggle from './ThemeToggle';
 import './Navigation.css';
 
 function Navigation() {
@@ -60,7 +61,8 @@ function Navigation() {
                             </Link>
                         ))}
 
-                        <div className="nav-cta-group">
+                        <div className="nav-cta-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <ThemeToggle />
                             <Link
                                 to={user ? "/admin" : "/login"}
                                 className="nav-link"

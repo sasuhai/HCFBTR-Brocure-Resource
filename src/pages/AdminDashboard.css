@@ -2,14 +2,14 @@
 
 .admin-dashboard {
     min-height: 100vh;
-    background-color: var(--apple-gray-bg);
-    color: var(--apple-text-black);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 .admin-header {
-    background-color: white;
+    background-color: var(--bg-card);
     padding: 24px;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 0 var(--border-light);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -27,12 +27,12 @@
     font-size: 24px;
     font-weight: 600;
     margin: 0;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
 }
 
 .admin-header p {
     font-size: 14px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     margin: 4px 0 0 0;
 }
 
@@ -42,7 +42,7 @@
     align-items: center;
     justify-content: center;
     font-size: 17px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
 }
 
 .admin-message {
@@ -70,14 +70,14 @@
     display: flex;
     gap: 8px;
     padding: 0 24px;
-    border-bottom: 1px solid #d2d2d7;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .tab {
     padding: 12px 20px;
     border: none;
     background: transparent;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-weight: 500;
     cursor: pointer;
     font-size: 15px;
@@ -87,12 +87,12 @@
 }
 
 .tab:hover {
-    color: var(--apple-text-black);
+    color: var(--text-primary);
 }
 
 .tab.active {
-    color: var(--apple-blue);
-    border-bottom-color: var(--apple-blue);
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
     font-weight: 600;
 }
 
@@ -103,10 +103,10 @@
 }
 
 .tab-content {
-    background: white;
+    background: var(--bg-card);
     border-radius: var(--apple-card-radius);
     padding: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px var(--shadow-sm);
 }
 
 .content-header {
@@ -119,16 +119,16 @@
 .content-header h2 {
     font-size: 28px;
     margin: 0;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     font-weight: 600;
 }
 
 .admin-form {
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
     padding: 30px;
     border-radius: 16px;
     margin-bottom: 30px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-light);
 }
 
 .form-group {
@@ -138,7 +138,7 @@
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     font-weight: 500;
     font-size: 14px;
 }
@@ -148,12 +148,12 @@
 .form-group select {
     width: 100%;
     padding: 12px 16px;
-    border: 1px solid #d2d2d7;
+    border: 1px solid var(--border-light);
     border-radius: 12px;
     font-size: 15px;
     transition: all 0.2s ease;
-    background: white;
-    color: var(--apple-text-black);
+    background: var(--bg-card);
+    color: var(--text-primary);
     font-family: var(--apple-font-heading);
 }
 
@@ -161,7 +161,7 @@
 .form-group textarea:focus,
 .form-group select:focus {
     outline: none;
-    border-color: var(--apple-blue);
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
 }
 
@@ -191,7 +191,7 @@
 .data-table {
     overflow-x: auto;
     border-radius: 12px;
-    border: 1px solid #d2d2d7;
+    border: 1px solid var(--border-light);
 }
 
 table {
@@ -200,25 +200,25 @@ table {
 }
 
 thead {
-    background: #f5f5f7;
+    background: var(--bg-secondary);
 }
 
 th {
     padding: 16px;
     text-align: left;
     font-weight: 600;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid #d2d2d7;
+    border-bottom: 1px solid var(--border-light);
 }
 
 td {
     padding: 16px;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid var(--border-light);
     font-size: 15px;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
 }
 
 tr:last-child td {
@@ -346,6 +346,7 @@ tr:hover {
     background: #fee2e2;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
     .content-header {
         flex-direction: column;
@@ -372,13 +373,13 @@ tr:hover {
 }
 
 .stat-card {
-    background: #f5f5f7;
+    background: var(--bg-secondary);
     padding: 24px;
     border-radius: 16px;
     display: flex;
     align-items: center;
     gap: 16px;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+    box-shadow: inset 0 0 0 1px var(--color-shadow);
 }
 
 .stat-icon {
@@ -392,7 +393,7 @@ tr:hover {
 }
 
 .stat-icon.blue {
-    background-color: var(--apple-blue);
+    background-color: var(--color-primary);
 }
 
 .stat-icon.green {
@@ -408,11 +409,12 @@ tr:hover {
     font-weight: 700;
     margin: 0;
     line-height: 1;
+    color: var(--text-primary);
 }
 
 .stat-info p {
     margin: 4px 0 0 0;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-size: 14px;
     font-weight: 500;
 }
@@ -425,6 +427,7 @@ tr:hover {
 
 .analytics-section h3 {
     margin-bottom: 20px;
+    color: var(--text-primary);
 }
 
 .traffic-list {
@@ -442,21 +445,21 @@ tr:hover {
 
 .traffic-date {
     width: 80px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-weight: 500;
 }
 
 .traffic-bar-container {
     flex: 1;
     height: 8px;
-    background: #f5f5f7;
+    background: var(--bg-secondary);
     border-radius: 4px;
     overflow: hidden;
 }
 
 .traffic-bar {
     height: 100%;
-    background: var(--apple-blue);
+    background: var(--color-primary);
     border-radius: 4px;
 }
 
@@ -464,6 +467,7 @@ tr:hover {
     width: 40px;
     text-align: right;
     font-weight: 600;
+    color: var(--text-primary);
 }
 
 @media (max-width: 900px) {

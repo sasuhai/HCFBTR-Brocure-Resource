@@ -1,8 +1,10 @@
 /* Apple-Inspired Donate Page */
 
+/* Apple-Inspired Donate Page */
+
 .donate-page {
     min-height: 100vh;
-    background-color: white;
+    background-color: var(--bg-primary);
 }
 
 .donate-header {
@@ -49,12 +51,12 @@
     padding: 50px 30px;
     transition: transform 0.3s ease;
     border-radius: var(--apple-card-radius);
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
 }
 
 .impact-area-card:hover {
     transform: scale(1.03);
-    background: #ededef;
+    background: var(--bg-tertiary);
 }
 
 .impact-area-icon {
@@ -65,18 +67,18 @@
 .impact-area-title {
     font-size: 28px;
     font-weight: 600;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     margin-bottom: 8px;
 }
 
 .impact-area-subtitle {
     font-size: 17px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     margin-bottom: 16px;
 }
 
 .impact-area-description {
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     line-height: 1.5;
     margin-bottom: 24px;
     font-size: 17px;
@@ -85,8 +87,8 @@
 .impact-area-amount {
     font-size: 17px;
     font-weight: 600;
-    color: var(--apple-blue);
-    background-color: white;
+    color: var(--color-primary);
+    background-color: var(--bg-card);
     padding: 8px 16px;
     border-radius: 980px;
     display: inline-block;
@@ -107,10 +109,10 @@
     flex-direction: column;
     position: relative;
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    background: white;
+    background: var(--bg-card);
     border-radius: var(--apple-card-radius);
     box-shadow: var(--apple-card-shadow);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-light);
 }
 
 .donation-tier-card.featured {
@@ -141,20 +143,20 @@
 .tier-header {
     text-align: center;
     padding-bottom: 30px;
-    border-bottom: 1px solid #d2d2d7;
+    border-bottom: 1px solid var(--border-light);
     margin-bottom: 30px;
 }
 
 .tier-name {
     font-size: 24px;
     font-weight: 600;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     margin-bottom: 4px;
 }
 
 .tier-subtitle {
     font-size: 15px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     margin-bottom: 16px;
 }
 
@@ -162,14 +164,14 @@
     font-family: var(--apple-font-heading);
     font-size: 48px;
     font-weight: 700;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     margin-bottom: 4px;
     letter-spacing: -0.02em;
 }
 
 .tier-period {
     font-size: 15px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
 }
 
 .tier-benefits {
@@ -180,8 +182,8 @@
 
 .tier-benefits li {
     padding: 12px 0;
-    color: var(--apple-text-secondary);
-    border-bottom: 1px solid #f5f5f7;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-light);
     font-size: 15px;
 }
 
@@ -203,26 +205,26 @@
     margin: 0 auto;
     padding: 80px 40px;
     text-align: center;
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
     border-radius: var(--apple-card-radius);
 }
 
 .onetime-title {
     font-size: 40px;
     font-weight: 600;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     margin-bottom: 10px;
 }
 
 .onetime-subtitle {
     font-size: 21px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     margin-bottom: 40px;
 }
 
 .onetime-description {
     font-size: 19px;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     line-height: 1.5;
     margin-bottom: 40px;
     max-width: 600px;
@@ -240,12 +242,12 @@
 
 .amount-btn {
     padding: 16px 32px;
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
     border-radius: 16px;
     font-size: 21px;
     font-weight: 600;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
     min-width: 120px;
@@ -270,7 +272,7 @@
 .trust-item {
     text-align: center;
     padding: 40px;
-    background: white;
+    background: var(--bg-card);
     border-radius: var(--apple-card-radius);
     box-shadow: var(--apple-card-shadow);
 }
@@ -282,13 +284,13 @@
 
 .trust-item h3 {
     font-size: 24px;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     margin-bottom: 8px;
     font-weight: 600;
 }
 
 .trust-item p {
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-size: 17px;
     font-style: normal;
     margin-bottom: 8px;
@@ -296,7 +298,7 @@
 
 /* Premium Donation Section */
 .premium-donate-section {
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
 }
 
 .premium-donate-wrapper {
@@ -309,14 +311,14 @@
 
 /* Main Donation Card */
 .donation-main-card {
-    background: white;
+    background: var(--bg-card);
     border-radius: var(--apple-card-radius);
     box-shadow: var(--apple-card-shadow);
     overflow: hidden;
 }
 
 .donation-card-header {
-    background: black;
+    background: #000000;
     color: white;
     padding: 60px;
     text-align: center;
@@ -351,6 +353,7 @@
     width: 280px;
     height: 280px;
     background: white;
+    /* Keep white for QR scanability */
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -358,8 +361,9 @@
     justify-content: center;
     margin: 0 auto;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-    border: 1px solid #d2d2d7;
-    color: var(--apple-text-black);
+    border: 1px solid var(--border-light);
+    color: #1d1d1f;
+    /* Keep dark for QR readability */
 }
 
 .qr-icon {
@@ -383,8 +387,8 @@
 }
 
 .donation-divider span {
-    background: #f5f5f7;
-    color: #86868b;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
     padding: 8px 16px;
     border-radius: 980px;
     font-weight: 600;
@@ -398,7 +402,7 @@
 
 .bank-details-title {
     font-size: 32px;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     text-align: center;
     margin-bottom: 40px;
     font-weight: 600;
@@ -413,7 +417,7 @@
 }
 
 .bank-info-item {
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
     padding: 24px;
     border-radius: 16px;
     border-left: none;
@@ -421,14 +425,14 @@
 }
 
 .bank-info-item.featured {
-    background: #e7f3ff;
-    /* Very subtle blue */
+    background: rgba(0, 113, 227, 0.1);
+    /* Very subtle blue suitable for both modes */
     border-left: none;
 }
 
 .info-label {
     font-size: 12px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     margin-bottom: 4px;
     font-weight: 600;
     text-transform: uppercase;
@@ -438,23 +442,23 @@
 .info-value {
     font-size: 21px;
     font-weight: 600;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
 }
 
 .account-number {
     font-family: monospace;
     /* Keep monospace for bank numbers */
     font-size: 24px;
-    color: var(--apple-blue);
+    color: var(--color-primary);
     letter-spacing: 1px;
 }
 
 .copy-btn {
     margin-top: 16px;
     padding: 8px 16px;
-    background: white;
-    color: var(--apple-blue);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--bg-card);
+    color: var(--color-primary);
+    border: 1px solid var(--border-light);
     border-radius: 980px;
     font-weight: 500;
     cursor: pointer;
@@ -463,36 +467,36 @@
 }
 
 .copy-btn:hover {
-    background: var(--apple-blue);
+    background: var(--color-primary);
     color: white;
 }
 
 /* Instructions Card */
 .donation-instructions-card {
-    background: white;
+    background: var(--bg-card);
     border-radius: var(--apple-card-radius);
     box-shadow: var(--apple-card-shadow);
     overflow: hidden;
 }
 
 .instructions-header {
-    background: var(--apple-gray-bg);
-    color: var(--apple-text-black);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     padding: 40px;
     text-align: center;
-    border-bottom: 1px solid #d2d2d7;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .instructions-header h3 {
     font-size: 28px;
     margin-bottom: 8px;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     font-weight: 600;
 }
 
 .instructions-header p {
     font-size: 17px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
 }
 
 .instructions-content {
@@ -504,14 +508,14 @@
     gap: 24px;
     margin-bottom: 40px;
     padding-bottom: 40px;
-    border-bottom: 1px solid #f5f5f7;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .step-number {
     flex-shrink: 0;
     width: 48px;
     height: 48px;
-    background: var(--apple-blue);
+    background: var(--color-primary);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -523,13 +527,13 @@
 
 .step-content h4 {
     font-size: 21px;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     margin-bottom: 8px;
     font-weight: 600;
 }
 
 .step-content p {
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-size: 17px;
     line-height: 1.5;
 }
@@ -550,12 +554,12 @@
     border-radius: 20px;
     text-decoration: none;
     transition: all 0.3s;
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
 }
 
 .contact-option:hover {
     transform: scale(1.02);
-    background: #ededef;
+    background: var(--bg-tertiary);
 }
 
 .contact-option.whatsapp .contact-value {
@@ -564,12 +568,12 @@
 
 /* Apple Green */
 .contact-option.email .contact-value {
-    color: var(--apple-blue);
+    color: var(--color-primary);
 }
 
 .contact-label {
     font-size: 12px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-weight: 600;
     text-transform: uppercase;
 }
@@ -577,7 +581,12 @@
 .contact-value {
     font-size: 19px;
     font-weight: 600;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
+    word-break: break-word;
+    /* Ensure valid break points */
+    overflow-wrap: break-word;
+    /* Standard break if necessary */
+    line-height: 1.3;
 }
 
 /* Responsive */
@@ -585,7 +594,8 @@
 
     .impact-areas-grid,
     .donation-tiers-grid,
-    .trust-grid {
+    .trust-grid,
+    .contact-options {
         grid-template-columns: 1fr;
     }
 
@@ -597,7 +607,7 @@
 
 /* Thank You Card */
 .thank-you-card {
-    background: white;
+    background: var(--bg-card);
     border-radius: var(--apple-card-radius);
     box-shadow: var(--apple-card-shadow);
     padding: 60px;
@@ -608,7 +618,7 @@
 .thank-you-icon {
     width: 64px;
     height: 64px;
-    background: var(--apple-blue);
+    background: var(--color-primary);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -621,19 +631,19 @@
 .thank-you-card h3 {
     font-size: 32px;
     font-weight: 600;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     margin-bottom: 8px;
 }
 
 .thank-you-subtitle {
     font-size: 21px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     margin-bottom: 24px;
 }
 
 .thank-you-message {
     font-size: 19px;
-    color: var(--apple-text-secondary);
+    color: var(--text-secondary);
     line-height: 1.5;
     max-width: 700px;
     margin: 0 auto 40px;
@@ -649,16 +659,16 @@
 }
 
 .thank-you-stat {
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
     padding: 24px;
     border-radius: 20px;
     transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    border: 1px solid rgba(0, 0, 0, 0.02);
+    border: 1px solid transparent;
 }
 
 .thank-you-stat:hover {
     transform: translateY(-5px);
-    background: #ededef;
+    background: var(--bg-tertiary);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 

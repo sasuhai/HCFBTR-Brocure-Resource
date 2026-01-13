@@ -17,11 +17,11 @@
 .section {
     padding: 120px 0;
     /* Huge breathing room */
-    background-color: white;
+    background-color: var(--bg-primary);
 }
 
 .section:nth-child(even) {
-    background-color: var(--apple-gray-bg);
+    background-color: var(--bg-secondary);
 }
 
 .container {
@@ -38,7 +38,7 @@ h3,
 h4 {
     font-family: var(--apple-font-heading);
     letter-spacing: -0.015em;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
 }
 
 .section-title {
@@ -52,7 +52,7 @@ h4 {
 .section-subtitle {
     font-size: 24px;
     font-weight: 400;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     text-align: center;
     margin-bottom: 60px;
 }
@@ -171,9 +171,9 @@ h4 {
    Impact Stats - "Bento Numbers"
    ============================================ */
 .impact-section {
-    background-color: white;
+    background-color: var(--bg-primary);
     padding: 80px 0;
-    border-bottom: 1px solid #d2d2d7;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .impact-grid {
@@ -186,7 +186,7 @@ h4 {
 .impact-number {
     font-size: 80px;
     font-weight: 600;
-    background: linear-gradient(180deg, #1d1d1f 0%, #434344 100%);
+    background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-tertiary) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -198,12 +198,12 @@ h4 {
 .impact-label {
     font-size: 21px;
     font-weight: 600;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
 }
 
 .impact-sublabel {
     font-size: 14px;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     margin-top: 5px;
 }
 
@@ -213,7 +213,7 @@ h4 {
 .about-section {
     padding: 0;
     /* Edge to edge wrapper if needed */
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
 }
 
 .about-content {
@@ -236,7 +236,7 @@ h4 {
 .about-text p {
     font-size: 21px;
     line-height: 1.45;
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-weight: 400;
     margin-bottom: 30px;
 }
@@ -244,7 +244,7 @@ h4 {
 .about-image .image-placeholder {
     border-radius: var(--apple-radius);
     aspect-ratio: 16/10;
-    background: white;
+    background: var(--bg-card);
     box-shadow: var(--apple-card-shadow);
     display: flex;
     flex-direction: column;
@@ -261,7 +261,7 @@ h4 {
    Social Feed - "Cards Grid"
    ============================================ */
 .social-section {
-    background-color: white;
+    background-color: var(--bg-primary);
 }
 
 .social-feed-wrapper {
@@ -274,10 +274,10 @@ h4 {
 
 /* The Feed Card */
 .fb-feed-container {
-    background: white;
+    background: var(--bg-card);
     border-radius: var(--apple-radius);
     box-shadow: var(--apple-card-shadow);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-light);
     overflow: hidden;
     transition: transform 0.3s ease;
 }
@@ -291,12 +291,12 @@ h4 {
 /* Sidebar Cards - Premium White Style */
 .social-connect-card,
 .social-info-card {
-    background: white;
+    background: var(--bg-card);
     border-radius: var(--apple-radius);
     padding: 40px 32px;
     text-align: center;
     box-shadow: var(--apple-card-shadow);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-light);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -324,7 +324,7 @@ h4 {
 }
 
 .connect-subtitle {
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-size: 15px;
     margin-bottom: 24px;
     line-height: 1.4;
@@ -336,9 +336,9 @@ h4 {
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    color: var(--apple-text-black);
+    color: var(--text-primary);
     margin-bottom: 32px;
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
     padding: 10px 16px;
     border-radius: 20px;
     display: inline-flex;
@@ -349,12 +349,12 @@ h4 {
 }
 
 .stat-separator {
-    color: #d2d2d7;
+    color: var(--border-light);
 }
 
 /* Info Card Internals */
 .social-info-card {
-    background: white;
+    background: var(--bg-card);
     /* Differentiate if needed, but white is cleanest */
 }
 
@@ -364,7 +364,7 @@ h4 {
     margin-bottom: 16px;
     display: inline-flex;
     padding: 12px;
-    background: #fff5e6;
+    background: rgba(255, 159, 10, 0.1);
     border-radius: 50%;
 }
 
@@ -374,7 +374,7 @@ h4 {
 }
 
 .social-info-card p {
-    color: var(--apple-text-gray);
+    color: var(--text-secondary);
     font-size: 15px;
     line-height: 1.5;
 }
@@ -383,7 +383,7 @@ h4 {
    Features - "Bento Box Grid"
    ============================================ */
 .features-section {
-    background: var(--apple-gray-bg);
+    background: var(--bg-secondary);
 }
 
 .features-grid {
@@ -393,7 +393,7 @@ h4 {
 }
 
 .feature-card {
-    background: white;
+    background: var(--bg-card);
     border-radius: var(--apple-radius);
     padding: 40px;
     text-align: left;
@@ -514,9 +514,9 @@ h4 {
 
 /* 2. Volunteer - Secondary (Solid White) */
 .home-page .cta-buttons .btn-secondary {
-    background-color: white !important;
-    color: #1d1d1f !important;
-    border: 1px solid white;
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--bg-card);
 }
 
 .home-page .cta-buttons .btn-secondary:hover {
@@ -581,8 +581,15 @@ h4 {
         font-size: 19px;
     }
 
+    .hero-content {
+        padding-top: 100px;
+        /* Push content down from navbar */
+    }
+
     .hero-description {
         font-size: 16px;
+        padding: 0 10px;
+        /* Add breathing room */
     }
 
     .hero-cta {

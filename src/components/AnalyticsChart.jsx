@@ -198,11 +198,17 @@ const AnalyticsChart = ({ data, topPages }) => {
                 {chartData.length > 0 ? (
                     <ResponsiveContainer>
                         <LineChart data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                            <XAxis dataKey="name" stroke="#666" fontSize={12} tickMargin={10} />
-                            <YAxis stroke="#666" fontSize={12} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-light)" strokeOpacity={0.6} />
+                            <XAxis dataKey="name" stroke="var(--text-secondary)" fontSize={12} tickMargin={10} />
+                            <YAxis stroke="var(--text-secondary)" fontSize={12} />
                             <Tooltip
-                                contentStyle={{ backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', border: 'none' }}
+                                contentStyle={{
+                                    backgroundColor: 'var(--bg-card)',
+                                    borderRadius: '8px',
+                                    boxShadow: 'var(--shadow-md)',
+                                    border: '1px solid var(--border-light)',
+                                    color: 'var(--text-primary)'
+                                }}
                             />
                             <Legend />
                             {selectedMetrics.map((m, index) => {

@@ -5,45 +5,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap');
 
 :root {
-  /* Color Palette - Earth Tones (Legacy) */
-  --color-primary: #2C5F4E;
-  /* Deep Forest Green */
-  --color-primary-rgb: 44, 95, 78;
-  /* RGB for rgba usage */
-  --color-primary-light: #3A7A63;
-  /* Lighter Green */
-  --color-primary-dark: #1E4336;
-  /* Darker Green */
+  /* ============================================
+     Color Palette - Semantic Theming
+     ============================================ */
 
-  --color-secondary: #D4A574;
-  /* Warm Sand */
-  --color-secondary-light: #E8C9A1;
-  /* Light Sand */
-  --color-secondary-dark: #B38A5C;
-  /* Dark Sand */
+  /* Light Mode (Default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f7;
+  --bg-tertiary: #e5e5ea;
+  --bg-card: #ffffff;
 
-  --color-accent: #E07A5F;
-  /* Coral for CTAs */
-  --color-accent-hover: #D45F45;
-  /* Darker Coral */
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --text-tertiary: #a1a1a6;
+  --text-inverse: #ffffff;
 
-  --color-text-primary: #1d1d1f;
-  /* Apple Black */
-  --color-text-secondary: #86868b;
-  /* Apple Gray */
-  --color-text-light: #86868b;
-  --color-bg-white: #ffffff;
-  --color-bg-light: #f5f5f7;
-  /* Apple Light Gray */
-  --color-bg-card: #FFFFFF;
-  /* Pure White for cards */
-  --color-border: #d2d2d7;
-  --color-shadow: rgba(0, 0, 0, 0.04);
+  --border-light: #d2d2d7;
+  --border-strong: #86868b;
+
+  --color-primary: #0071e3;
+  --color-primary-hover: #0077ed;
+
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --nav-border: rgba(255, 255, 255, 0.5);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+  /* Legacy & Apple Mappings */
+  --apple-gray-bg: var(--bg-secondary);
+  --apple-text-black: var(--text-primary);
+  --apple-text-gray: var(--text-secondary);
+  --apple-blue: var(--color-primary);
+  --apple-blue-hover: var(--color-primary-hover);
+  --apple-card-shadow: var(--shadow-md);
+
+  --color-bg-white: var(--bg-primary);
+  --color-bg-light: var(--bg-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--border-light);
+
+  /* Legacy App Colors (kept for compatibility but mapped where possible) */
+  --legacy-green: #2C5F4E;
+  --legacy-sand: #D4A574;
 
   /* Apple Design System Tokens */
-  --apple-gray-bg: #f5f5f7;
-  --apple-text-black: #1d1d1f;
-  --apple-text-gray: #86868b;
   --apple-blue: #0071e3;
   --apple-blue-hover: #0077ed;
   --apple-radius: 20px;
@@ -123,6 +131,53 @@
   --container-max-width: 1080px;
   /* Apple Standard */
   --container-padding: var(--space-md);
+}
+
+[data-theme='dark'] {
+  /* Dark Mode Overrides - Apple Dark Mode Style */
+  --bg-primary: #000000;
+  --bg-secondary: #1c1c1e;
+  --bg-tertiary: #2c2c2e;
+  --bg-card: #1c1c1e;
+
+  --text-primary: #f5f5f7;
+  --text-secondary: #86868b;
+  --text-tertiary: #636366;
+  --text-inverse: #1d1d1f;
+
+  --border-light: #38383a;
+  --border-strong: #48484a;
+
+  --color-primary: #0a84ff;
+  /* Apple Dark Mode Blue */
+  --color-primary-hover: #409cff;
+
+  --nav-bg: rgba(28, 28, 30, 0.85);
+  --nav-border: rgba(255, 255, 255, 0.1);
+
+  /* Update legacy mappings for dark mode */
+  --apple-gray-bg: var(--bg-secondary);
+  --apple-text-black: var(--text-primary);
+  --apple-text-gray: var(--text-secondary);
+  --apple-blue: var(--color-primary);
+  --apple-blue-hover: var(--color-primary-hover);
+  --apple-card-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+
+  --color-bg-white: var(--bg-primary);
+  --color-bg-light: var(--bg-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--border-light);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ============================================

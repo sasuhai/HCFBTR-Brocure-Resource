@@ -539,7 +539,7 @@ function AdminDashboard() {
                                     <button
                                         onClick={() => setShowActions(!showActions)}
                                         className="btn btn-icon"
-                                        style={{ padding: '4px', background: 'transparent', color: '#666', display: 'flex' }}
+                                        style={{ padding: '4px', background: 'transparent', color: 'var(--text-secondary)', display: 'flex' }}
                                         title={showActions ? "Hide Actions" : "Show Actions"}
                                     >
                                         <Icons.Settings />
