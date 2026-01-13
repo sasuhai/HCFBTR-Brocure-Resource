@@ -573,6 +573,13 @@ h4 {
         padding: 60px 0;
     }
 
+    .hero-section {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+        padding-bottom: 60px;
+    }
+
     .hero-title {
         font-size: 36px;
         line-height: 1.1;
@@ -583,19 +590,30 @@ h4 {
     }
 
     .hero-content {
-        padding-top: 100px;
-        /* Push content down from navbar */
+        padding-top: 140px;
+        /* Increased from 100px to clear header safely */
+        padding-bottom: 40px;
     }
 
     .hero-description {
         font-size: 16px;
         padding: 0 10px;
         /* Add breathing room */
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        /* Limit lines if absolutely necessary, but auto height is better */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        /* Ideally let it flow, but if we must clamp: */
+        /* For now, let's REMOVE clamping and let height grow */
+        overflow: visible;
+        display: block;
     }
 
     .hero-cta {
         flex-direction: column;
         gap: 12px;
+        margin-bottom: 20px;
     }
 
     .hero-cta .btn {
