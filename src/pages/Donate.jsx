@@ -111,33 +111,29 @@ function Donate() {
                             </div>
 
                             <div className="donation-card-content">
-                                {/* QR Code Section */}
-                                <div className="qr-code-section">
-                                    <div className="qr-code-wrapper">
-                                        {orgData?.qrCodeUrl ? (
-                                            <img
-                                                src={orgData.qrCodeUrl}
-                                                alt="Donation QR Code"
-                                                className="qr-code-image"
-                                                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                                            />
-                                        ) : (
-                                            <div className="qr-code-placeholder">
-                                                <div className="qr-icon"><Icons.Smartphone /></div>
-                                                <p>{c.premiumSection.qrPlaceholder?.title || 'QR Code'}</p>
-                                                <span className="qr-hint">{c.premiumSection.qrPlaceholder?.subtitle || 'Scan untuk derma'}</span>
+                                {/* QR Code Section - Only show if QR code exists */}
+                                {orgData?.qrCodeUrl && (
+                                    <>
+                                        <div className="qr-code-section">
+                                            <div className="qr-code-wrapper">
+                                                <img
+                                                    src={orgData.qrCodeUrl}
+                                                    alt="Donation QR Code"
+                                                    className="qr-code-image"
+                                                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                                                />
                                             </div>
-                                        )}
-                                    </div>
-                                    <div className="qr-code-label">
-                                        <span>{c.premiumSection.qrLabel}</span>
-                                    </div>
-                                </div>
+                                            <div className="qr-code-label">
+                                                <span>{c.premiumSection.qrLabel}</span>
+                                            </div>
+                                        </div>
 
-                                {/* Divider */}
-                                <div className="donation-divider">
-                                    <span>{c.premiumSection.dividerText}</span>
-                                </div>
+                                        {/* Divider */}
+                                        <div className="donation-divider">
+                                            <span>{c.premiumSection.dividerText}</span>
+                                        </div>
+                                    </>
+                                )}
 
                                 {/* Bank Details Section */}
                                 <div className="bank-details-section">

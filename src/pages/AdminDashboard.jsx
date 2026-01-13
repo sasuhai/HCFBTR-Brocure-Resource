@@ -1419,8 +1419,24 @@ function AdminDashboard() {
                                     <label>Donation QR Code</label>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                         {orgForm.qrCodeUrl && (
-                                            <div className="preview-image" style={{ width: '100px', height: '100px', border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden' }}>
-                                                <img src={orgForm.qrCodeUrl} alt="QR Code" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                                            <div style={{ position: 'relative' }}>
+                                                <div className="preview-image" style={{ width: '100px', height: '100px', border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden' }}>
+                                                    <img src={orgForm.qrCodeUrl} alt="QR Code" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setOrgForm({ ...orgForm, qrCodeUrl: '' })}
+                                                    className="btn btn-danger btn-sm"
+                                                    style={{
+                                                        marginTop: '8px',
+                                                        width: '100%',
+                                                        padding: '6px 12px',
+                                                        fontSize: '12px'
+                                                    }}
+                                                    title="Delete QR Code"
+                                                >
+                                                    <Icons.Trash /> Delete
+                                                </button>
                                             </div>
                                         )}
                                         <div style={{ flex: 1 }}>
