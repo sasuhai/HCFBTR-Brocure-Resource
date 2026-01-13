@@ -30,6 +30,90 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Comprehensive Facebook error suppression
+    useEffect(() => {
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        // Facebook-specific error patterns and file signatures
+        const fbFileSignatures = [
+            'aZUh82_UR0Y.js',
+            'x3IU3bl1BvF.js',
+            'zdNi2lPgAb0.js',
+            'hh5Up06oxz4.js',
+            'Xogr7p60AX5.js'
+        ];
+
+        const fbErrorPatterns = [
+            'ErrorUtils',
+            'DataStore.get',
+            'Could not find element',
+            'Permissions policy violation',
+            'facebook.com',
+            'fb.com',
+            'connect.facebook.net',
+            'unload is not allowed'
+        ];
+
+        const shouldSuppressError = (...args) => {
+            const message = args.join(' ');
+
+            // Check message patterns
+            const hasPattern = fbErrorPatterns.some(pattern =>
+                message.toLowerCase().includes(pattern.toLowerCase())
+            );
+
+            // Get stack trace to check file origins
+            const stack = new Error().stack || '';
+            const hasFbFile = fbFileSignatures.some(file => stack.includes(file));
+
+            return hasPattern || hasFbFile;
+        };
+
+        // Override console methods
+        console.error = (...args) => {
+            if (!shouldSuppressError(...args)) {
+                originalError.apply(console, args);
+            }
+        };
+
+        console.warn = (...args) => {
+            if (!shouldSuppressError(...args)) {
+                originalWarn.apply(console, args);
+            }
+        };
+
+        // Global error event handler for uncaught errors
+        const handleError = (event) => {
+            if (event.filename && fbFileSignatures.some(sig => event.filename.includes(sig))) {
+                event.preventDefault();
+                event.stopPropagation();
+                return true;
+            }
+        };
+
+        // Global unhandledrejection handler
+        const handleRejection = (event) => {
+            const reason = event.reason?.stack || event.reason?.message || String(event.reason);
+            if (fbFileSignatures.some(sig => reason.includes(sig)) ||
+                fbErrorPatterns.some(pattern => reason.toLowerCase().includes(pattern.toLowerCase()))) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        };
+
+        window.addEventListener('error', handleError, true);
+        window.addEventListener('unhandledrejection', handleRejection, true);
+
+        // Cleanup
+        return () => {
+            console.error = originalError;
+            console.warn = originalWarn;
+            window.removeEventListener('error', handleError, true);
+            window.removeEventListener('unhandledrejection', handleRejection, true);
+        };
+    }, []);
+
     useEffect(() => {
         loadPageContent();
     }, []);

@@ -80,6 +80,7 @@ function AdminDashboard() {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(null);
     const [showActions, setShowActions] = useState(false);
+    const [storageStats, setStorageStats] = useState({ dbSize: 0, mediaSize: 0, docCount: 0 });
 
     // Redirect if not admin
     useEffect(() => {
@@ -119,6 +120,27 @@ function AdminDashboard() {
             // Sort by Date Descending
             const sortedAnalytics = analyticsRaw.sort((a, b) => new Date(b.id) - new Date(a.id));
             setAnalyticsData(sortedAnalytics);
+
+            // Estimate Storage (Database + Embedded Media)
+            const allStorageData = {
+                users: usersData,
+                blog: blogData,
+                classes: classesData,
+                pages: { homeData, journeyData, donateData, volunteerData, classesPageData },
+                analytics: analyticsRaw
+            };
+            const jsonString = JSON.stringify(allStorageData);
+            const totalBytes = new Blob([jsonString]).size;
+
+            // Calculate Embedded Media (Base64) roughly
+            const mediaMatches = jsonString.match(/data:image\/[^"]+/g) || [];
+            const mediaBytes = mediaMatches.reduce((acc, str) => acc + str.length, 0);
+
+            setStorageStats({
+                dbSize: totalBytes,
+                mediaSize: mediaBytes,
+                docCount: usersData.length + blogData.length + classesData.length + analyticsRaw.length + 5
+            });
 
             console.log('Analytics Loaded:', sortedAnalytics);
 
@@ -485,6 +507,30 @@ function AdminDashboard() {
                 {/* Analytics Tab */}
                 {activeTab === 'analytics' && (
                     <div className="tab-content analytics-dashboard">
+                        {/* Storage Box */}
+                        <div className="card" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', padding: '20px', borderRadius: '12px', marginBottom: '25px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                                <div style={{ background: 'rgba(255,255,255,0.2)', padding: '12px', borderRadius: '50%', display: 'flex' }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></svg>
+                                </div>
+                                <div>
+                                    <h5 style={{ margin: '0 0 5px 0', fontSize: '0.95em', opacity: 0.9, fontWeight: 'normal' }}>Total Database & Image Storage</h5>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
+                                        <h3 style={{ margin: 0, fontSize: '1.8em', fontWeight: 'bold' }}>
+                                            {(storageStats.dbSize / 1024 / 1024).toFixed(3)} MB
+                                        </h3>
+                                        <span style={{ fontSize: '0.9em', opacity: 0.9 }}>across {storageStats.docCount} items</span>
+                                    </div>
+                                    <div style={{ fontSize: '0.8em', opacity: 0.5, marginTop: '4px' }}>
+                                        {((storageStats.dbSize - storageStats.mediaSize) / 1024 / 1024).toFixed(2)} MB Text + {(storageStats.mediaSize / 1024 / 1024).toFixed(2)} MB Images
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{ textAlign: 'right', opacity: 0.7, fontSize: '0.8em', maxWidth: '200px', lineHeight: '1.4' }}>
+                                <div><Icons.AlertTriangle /> Estimate excludes indexes.</div>
+                                <div style={{ marginTop: '5px' }}>Storage Bucket: 0 Bytes (Unused)</div>
+                            </div>
+                        </div>
                         <div className="content-header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', width: '100%', gap: '10px' }}>
                                 <div></div>
