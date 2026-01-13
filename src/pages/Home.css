@@ -515,15 +515,16 @@ h4 {
 
 /* 2. Volunteer - Secondary (Solid White) */
 .home-page .cta-buttons .btn-secondary {
-    background-color: var(--bg-card) !important;
-    color: var(--text-primary) !important;
-    border: 1px solid var(--bg-card);
+    background-color: #ffffff !important;
+    color: #1d1d1f !important;
+    border: 1px solid #ffffff;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
 }
 
 .home-page .cta-buttons .btn-secondary:hover {
     background-color: rgba(255, 255, 255, 0.95) !important;
     transform: scale(1.04) !important;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5) !important;
 }
 
 /* 3. Explore Classes - Tertiary (Glass Outline) */
