@@ -567,3 +567,59 @@
         grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 480px) {
+    .journey-header {
+        padding: 100px 0 60px;
+    }
+
+    .journey-header-content h1 {
+        font-size: 42px;
+    }
+
+    .journey-intro {
+        font-size: 19px;
+    }
+
+    .timeline {
+        padding: 40px 0;
+    }
+
+    /* Reset timeline for mobile to be straight line */
+    .timeline::before {
+        left: 20px;
+    }
+
+    .timeline-item {
+        margin-bottom: 40px;
+    }
+
+    .timeline-left .timeline-content,
+    .timeline-right .timeline-content {
+        margin-left: 50px;
+        padding: 24px;
+    }
+
+    .timeline-left .timeline-content::before,
+    .timeline-right .timeline-content::before {
+        left: -38px;
+    }
+
+    .timeline-title {
+        font-size: 24px;
+    }
+
+    .forward-title {
+        font-size: 36px;
+    }
+
+    .forward-subtitle {
+        font-size: 19px;
+    }
+
+    .testimonial-card,
+    .testimonials-grid {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { getDocument } from '../firebase/firestoreService';
+import { useOrganization } from '../context/OrganizationContext';
 import './Journey.css';
 
 const Icons = {
@@ -25,6 +26,7 @@ function Journey() {
     const [loading, setLoading] = useState(true);
     const scrollRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const { orgData } = useOrganization();
 
     const scroll = (direction) => {
         if (scrollRef.current) {
@@ -216,7 +218,8 @@ function Journey() {
             {/* Milestones */}
             <section className="milestones-section section" style={{ backgroundColor: 'var(--color-bg-light)' }}>
                 <div className="container">
-                    <h2 className="section-title text-center mb-2xl">Pencapaian Kami | Our Achievements</h2>
+                    <h2 className="section-title text-center mb-sm">Pencapaian Kami | Our Achievements</h2>
+                    <p className="section-subtitle text-center mb-2xl">{orgData?.shortName}</p>
                     <div className="milestones-grid">
                         {milestones.map((milestone, index) => (
                             <div key={index} className="milestone-card">

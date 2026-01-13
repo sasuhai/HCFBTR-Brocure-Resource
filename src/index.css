@@ -142,6 +142,9 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+  width: 100%;
 }
 
 body {
@@ -152,6 +155,9 @@ body {
   color: var(--color-text-primary);
   background-color: var(--color-bg-white);
   overflow-x: hidden;
+  /* Prevent horizontal scroll */
+  width: 100%;
+  position: relative;
 }
 
 /* ============================================

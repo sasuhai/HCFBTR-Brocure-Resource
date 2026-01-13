@@ -348,3 +348,37 @@
         font-size: 24px;
     }
 }
+
+@media (max-width: 480px) {
+    .volunteer-header {
+        padding: 100px 0 60px;
+    }
+
+    .volunteer-header-content h1 {
+        font-size: 42px;
+    }
+
+    .volunteer-intro {
+        font-size: 19px;
+    }
+
+    .opportunity-card {
+        padding: 30px 24px;
+    }
+
+    .benefits-list {
+        grid-template-columns: 1fr;
+    }
+
+    .volunteer-form {
+        padding: 30px 20px;
+    }
+
+    .form-title {
+        font-size: 32px;
+    }
+
+    .testimonial-text {
+        font-size: 20px;
+    }
+}

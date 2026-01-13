@@ -196,23 +196,27 @@ function Home() {
                             {/* Connect Card */}
                             <div className="social-connect-card">
                                 <div className="connect-content">
-                                    <div className="fb-logo-large">f</div>
-                                    <h3>HCF BTR</h3>
-                                    <p>Komuniti Sokongan Mualaf & Asnaf</p>
-                                    <div className="fb-stats">
-                                        <div><strong>Official</strong> Page</div>
-                                        <div><strong>Live</strong> Updates</div>
+                                    <div className="fb-logo-container">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                                     </div>
-                                    <a href="https://www.facebook.com/HCF.btr" target="_blank" rel="noopener noreferrer" className="btn btn-primary w-full">
+                                    <h3>HCF BTR</h3>
+                                    <p className="connect-subtitle">Komuniti Sokongan Mualaf & Asnaf</p>
+                                    <div className="fb-stats">
+                                        <div className="stat-item"><strong>Official</strong> Page</div>
+                                        <div className="stat-separator">•</div>
+                                        <div className="stat-item"><strong>Live</strong> Updates</div>
+                                    </div>
+                                    <a href="https://www.facebook.com/HCF.btr" target="_blank" rel="noopener noreferrer" className="btn btn-primary w-full mt-md">
                                         Visit Page
                                     </a>
                                 </div>
                             </div>
 
-                            {/* Info Card */}
-                            <div className="info-card mt-lg" style={{ background: 'white', padding: '1.5rem', borderRadius: '1rem', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
-                                <h4 style={{ color: 'var(--color-primary)', marginBottom: '0.5rem' }}>📢 Stay Updated</h4>
-                                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>
+                            {/* Info Card - Stay Updated */}
+                            <div className="social-info-card mt-lg">
+
+                                <h4>Stay Updated</h4>
+                                <p>
                                     Follow our page to get notifications about upcoming events, donation drives, and community stories.
                                 </p>
                             </div>

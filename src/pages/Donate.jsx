@@ -130,7 +130,6 @@ function Donate() {
                                         )}
                                     </div>
                                     <div className="qr-code-label">
-                                        <span className="scan-icon"><Icons.Camera /></span>
                                         <span>{c.premiumSection.qrLabel}</span>
                                     </div>
                                 </div>
@@ -143,7 +142,6 @@ function Donate() {
                                 {/* Bank Details Section */}
                                 <div className="bank-details-section">
                                     <h3 className="bank-details-title">
-                                        <span className="bank-icon"><Icons.Bank /></span>
                                         {c.premiumSection.bankTitle}
                                     </h3>
 

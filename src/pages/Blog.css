@@ -278,3 +278,26 @@
         top: 60px;
     }
 }
+
+@media (max-width: 480px) {
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-text {
+        padding: 30px 24px;
+    }
+
+    .featured-title {
+        font-size: 28px;
+    }
+
+    .featured-badge {
+        top: 20px;
+        right: 20px;
+    }
+
+    .post-content {
+        padding: 24px;
+    }
+}

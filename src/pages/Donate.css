@@ -688,3 +688,45 @@
         padding: 40px 24px;
     }
 }
+
+@media (max-width: 480px) {
+    .donate-header {
+        padding: 100px 0 60px;
+    }
+
+    .donate-header-content h1 {
+        font-size: 42px;
+    }
+
+    .donate-intro {
+        font-size: 19px;
+    }
+
+    .donation-card-header {
+        padding: 40px 20px;
+    }
+
+    .donation-card-header h2 {
+        font-size: 32px;
+    }
+
+    .donation-card-content {
+        padding: 30px 20px;
+    }
+
+    .bank-info-item {
+        padding: 20px;
+    }
+
+    .account-number {
+        font-size: 20px;
+    }
+
+    .contact-options {
+        grid-template-columns: 1fr;
+    }
+
+    .amount-btn {
+        width: 100%;
+    }
+}
